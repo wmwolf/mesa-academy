@@ -1,0 +1,10 @@
+-
+    tag: "r23.05.1"
+    sdk_linux: "2022.6.1"
+    sdk_mac_intel: "2022.10.1"
+    sdk_mac_arm: "2022.10.1"
+-
+    tag: "r23.12.1"
+    sdk_linux: "2022.6.1"
+    sdk_mac_intel: "2022.10.1"
+    sdk_mac_arm: "2022.10.1"
