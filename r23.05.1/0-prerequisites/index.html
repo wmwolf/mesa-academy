@@ -1,0 +1,69 @@
+---
+layout: default
+release:
+    tag: "r23.05.1"
+---
+<div class="py-5 text-center bg-secondary">
+  <div class="container">
+    <h1 class="display-1 text-light">Prerequisites</h1>
+  </div>
+</div>
+<div class="container">
+  <div class="row">
+    <div class="col-md-3 pt-2">
+      <nav id="scroll-nav" class="h-100 flex-column align-items-stretch pe-4 border-end">
+        <nav class="nav nav-pills flex-column">
+          <a class="nav-link" href="#overview">Overview</a>
+          <a class="nav-link" href="#tools">Tools</a>
+          <a class="nav-link" href="#shell-tutorial">Shell Tutorial</a>
+          <a class="nav-link" href="#environment-variables">Environment Variables</a>
+        </nav>
+      </nav>
+    </div>
+    <div class="col-md-9">
+      <div class="tutorial-content pt-2" data-bs-spy="scroll" data-bs-target="#scroll-nav" data-bs-smooth-scrolls="true" tabindex="0">
+        <h2 id="overview">Overview</h2>
+        <p>
+          The purpose of this guide is to get you set up with the tools and skills you'll need before diving into MESA. If you're already comfortable with the command line, you can probably skip this module.
+        </p>
+        <p>
+          This module will cover:
+        </p>
+        <ul>
+          <li>Suggested Tools</li>
+          <li>Basic Navigation and Usage of a Shell</li>
+          <li>Setting and Using Environment Variables</li>
+        </ul>
+        <h3>Conventions in this Module</h3>
+        <p>
+          As you work through this modules (and others), you'll see a few conventions used to help you navigate the content:
+        </p>
+        <dl class="row">
+          <dt class="col-md-4"><kbd>monospaced text with a background</kbd></dt>
+          <dd class="col-md-8">commands you should issue to a shell prompt</dd>
+          <dt class="col-md-4 mt-2"><code>monospace text with no background</code></dt>
+          <dd class="col-md-8 mt-2">variables or code</strong> that come from a file or that you should enter into a file (context should make this clear)</dd>
+          <dt class="col-md-4 mt-2">italicized text like <kbd><em>this</em></kbd> or </code><code><em>this</em></code></dt>
+          <dd class="col-md-8 mt-2">text you should replace with your own values</dd>
+        </dl>
+        <p>
+          Sometimes larger chunks of code will be included in the text, like this:
+        </p>
+        <h4 class="text-end"><span class="font-monospace">test_file.py</span> <small class="text-muted">(partial)</small></h4>
+        {% highlight python linenos %}
+def hello_world():
+    print("Hello, world!")
+
+if __name__ == "__main__":
+    hello_world()
+{% endhighlight %}
+        <p>
+          In this example the code came from or belongs in a file with the same name as the one in the label above the code listing. In this case, that'd be <span class="font-monospace">test_file.py</span>. The <span class="text-muted">(partial)</span> label indicates that the code listing is only a partial listing of the file. That is, some or much of the code in that file may have been omitted for clarity.
+        </p>
+        <p>
+          Depending on the scenario, the listing may call your attention to some code with no action needed on your part, or you may need to compare your code to the provided listing and copy if need be. The context should usually make this clear.
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
