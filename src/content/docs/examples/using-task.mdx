@@ -1,0 +1,40 @@
+---
+title: Using the Task Component
+description: Learn how to use the Task component with guide numbers from frontmatter
+guideNumber: "5"
+---
+
+import Task from '../../../components/Task.astro';
+
+export const guideNumber = frontmatter.guideNumber;
+
+# Using the Task Component
+
+This example shows how to properly pass the guide number from frontmatter to Task components.
+
+## Basic Usage
+
+<Task title="Create a new repository" number={1} guideNumber={guideNumber}>
+  First, create a new repository:
+
+  ```bash
+  mkdir my-project
+  cd my-project
+  git init
+  ```
+</Task>
+
+<Task title="Add project files" number={2} guideNumber={guideNumber}>
+  Next, add some initial files to your project:
+
+  ```bash
+  touch README.md
+  echo "# My Project" > README.md
+  ```
+</Task>
+
+## Manual Override
+
+<Task title="Special case" number={3} guideNumber="7">
+  This task uses a manually specified guide number (7) that overrides the one from frontmatter.
+</Task>
