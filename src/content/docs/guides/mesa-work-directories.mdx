@@ -1,0 +1,201 @@
+---
+title: MESA Work Directories
+description: "Working with MESA work directories: copying, compiling, and running MESA."
+draft: true
+guideNumber: "2"
+---
+import { Aside, FileTree } from '@astrojs/starlight/components';
+import Task from '../../../components/Task.astro';
+import Hint from '../../../components/Hint.astro';
+import Answer from '../../../components/Answer.astro';
+export const guideNumber = frontmatter.guideNumber;
+
+MESA is installed and set up, so now it's time to learn about the structure of MESA and MESA work directories.
+
+## Structure of `$MESA_DIR`
+Before we run a simulation, let's go through some basic structure of your MESA installation.
+
+<Task title="Navigate to and explore your MESA installation" number={1} guideNumber={guideNumber}>
+  Open a terminal and navigate to your MESA installation directory. This is the directory where you cloned the MESA repository. This task will also check to see if you <em>really</em> got your MESA installation set up correctly. Once in your directory, run the command `ls --color=auto` to list the contents of the directory.
+</Task>
+<Hint title="Use an environment variable.">
+  You can use the `MESA_DIR` environment variable to quickly navigate to your MESA installation directory.
+</Hint>
+<Answer>
+    If you set up your `MESA_DIR` envrionment variable correctly, you can use the following command to navigate to your MESA installation directory:
+    ```bash
+    cd $MESA_DIR
+    ls --color=auto
+    ```
+    <Aside type='caution'>
+  If you get an error that `$MESA_DIR` is not set, you need to set it up. Go back to the [prerequisites and setup guide](/docs/guides/prerequisites-and-setup) and ensure you've correctly installed MESA and set the appropriate environment variables, notably `MESA_DIR`, `MESASDK_ROOT`, and `OMP_NUM_THREADS`.
+</Aside>
+</Answer>
+
+<Aside type="tip">
+  The `--color=auto` option will colorize the output of `ls`, making it easier to distinguish between files and directories. I recommend aliasing `ls` to `ls --color=auto` in your shell configuration file (e.g., `.bashrc`, `.zshrc`) for convenience.
+</Aside>
+
+### Types of Files in `$MESA_DIR`
+You should see a list of directories and files, starting with `adipls`, `astero`, and `atm` and ending with `turb` and `utils`. If the color option is working properly for `ls`, you should see three different colors, representing three types of files:
+- **Directories**: these include `astero`, `binary`, and `star`
+- **Executable files**: these include `clean`, `install`, and `touch`
+- **Regular files**: these include `build.log`, `LICENSE`, and `README.rst`
+
+Most, but not all, of the directories in your MESA installation are standalone **modules**. The one we will use most in these tutorials is `star`, but `star` itself depends on several other modules, includeing `atm` (for building atmosphere models), `net` (for nuclear reaction networks), and `kap` (for opacities), among others. Some of the lower-level modules can and have been used in other projects independent of the higher-level `star`, `binary` (like `star`, but models two stars and their orbital interactions), and `astero` (for building stellar models that match certain asteroseismic constraints) modules. We won't cover that functionality in these tutorials and will instead focus on the `star` module for all but the last few tutorials, which will cover the `binary` and `astero` modules.
+
+The executable files are mostly used in developing and installing MESA. Indeed, you probably had to use the `install` script in the previous tutorial when you got MESA installed.
+
+The regular files are mostly related to documentation and licensing, but note that `build.log` contains useful information that you can use to debug issues with your MESA installation.
+
+## Structure of a MESA Module
+Let's take a deeper dive into the `star` module.
+
+<Task title="Explore the `star` module" number={2} guideNumber={guideNumber}>
+  Navigate to the `star` directory in your MESA installation and list its contents using `ls --color=auto`. You should see several directories and files, including `data`, `defaults`, `inlist`, and `run_star_extras.f90`.
+</Task>
+<Answer>
+  If you set up your `MESA_DIR` environment variable correctly, you can use the following command to navigate to the `star` module:
+  ```bash
+  cd $MESA_DIR/star
+  ls --color=auto
+  ```
+  You can also just use `cd star` since you should already be in your MESA installation directory.
+</Answer>
+
+You should see the following directories and files:
+<FileTree>
+- build_and_test
+- build_and_test_parallel
+- clean
+- cpv
+- **defaults**
+    - controls_dev.defaults
+    - **controls.defaults**
+    - FORMAT
+    - **history_columns.list**
+    - **pgstar.defaults**
+    - pgstar.README
+    - **profile_columns.list**
+    - star_job_dev.defaults
+    - **star_job.defaults**
+- export
+- i1
+- i1p
+- job/
+- make/
+- mk
+- **other**
+    - inlist_pgstar_other
+    - other_accreting_state.f90
+    - other_adjust_mdot.f90
+    - ...
+- **private**
+    - adjust_mass.f90
+    - adjust_mesh_split_merge.f90
+    - adjust_mesh_support.f90
+    - ...
+- **public**
+    - star_lib.f90
+    - star_def.f90
+- replace_v
+- test
+- **test_suite**
+    - 1.3M_ms_high_Z
+    - 1.4M_ms_op_mono
+    - 1.5M_with_diffusion
+    - ...
+- **work/**
+- work_standard_makefile
+</FileTree>
+
+Wow, that's a lot of files! Don't worry, though, you don't have to have a detailed understanding of all of them to use MESA, and we'll be returning to several of these as we delve deeper into MESA in later tutorials. For now, I'll briefly summarize the most important ones that are highlighted above.
+
+### `work`
+This directory is a template directory for a MESA simulation. To create a "blank" simulation, you would copy this directory to somewhere *outside of your MESA installation* and make edits there. For instance, you'd execute
+```bash
+cp -r $MESA_DIR/star/work /path/to/your/work/directory
+cd /path/to/your/work/directory
+```
+and then do your work in this new work directory. We'll explore the contents of this folder shortly. You should only be making edits to files in copies of this directory (or other work directories outside of your MESA installation), not in the original `work` directory in your MESA installation.
+
+### `test_suite`
+This directory contains a set of custom work directories that simulate a plethora of simulations. There goals are two-fold:
+- Provide broad coverage of MESA's capabilities for testing purposes (these are run on every commit to the MESA repository to monitor regressions)
+- Provide examples of how certain types of simulations can be set up.
+Some test cases are very simple, while others are quite complex. Most have some sort of compromises in them to make them faster to run, so in general, one should not consider test cases as "science ready."
+
+If a test case seems like a good starting point for your work, you can treat them like another template work directory by copying it to somewhere outside the MESA installation:
+
+```bash
+cp -r $MESA_DIR/star/test_suite/wd_nova_burst /path/to/your/work/directory
+cd /path/to/your/work/directory
+```
+
+Test cases can be a great way to jumpstart a project if the selected test case models something similar to what you are studying, so long as you take the time to understand what they are doing and how they differ from the standard `work` directory. Again, one should never edit files in the `test_suite` directory, but rather copy a particular test case them to a new work directory and edit them there.
+
+### `defaults`
+This directory contains the default settings for MESA simulations. This is also the definitive place to find what controls you can set in the files that control basic MESA simulations (called **inlists**). An inlist is a file that consists of key-value pairs that set parameters for a MESA simulation, and an **inlist** often consists of multiple sections, called **namelists**. Currently, a MESA simulation is controlled by five namelists:
+- `star_job`: controls the overall simulation, including instructions for how to generate a starting model, whether or not to save a final model file, and many aspects for the very beginning of the simulation.
+- `eos`: controls the equation of state used in the simulation, and tightly coupled to the `eos` module in MESA.
+- `kap`: controls for the opacity calculations used in the simulations, and tightly coupled to the `kap` module in MESA.
+- `controls`: controls the physics of the simulation not under the purview of `eos` and `kap`, including the convection, mass gain/loss, rotation, and other physical processes. This is where most of the interesting controls related to stellar evolution live.
+- `pgstar`: controls real-time plotting of simulation results, but unrelated to the actual physics of the simulation.
+
+Given these five namelist categories, you can see that in the `defaults` directory, there are files that define the default values for `star_job`, `controls`, and `pgstar`. These are named with the namelist name followed by the `.defaults` extension. The defaults files for `eos` and `kap` live in their respective modules. These default files often have reasonable documentation in the form of comments, but these are also used to render the [online documentation for the controls](https://docs.mesastar.org/en/latest/reference.html).
+
+In addition to the `*.defaults`, there are some `*.list` files. These define the columns that are output in the history and profile files generated by MESA simulations. Often, you'll copy these files into your own simulation folder and edit them to override the default columns that are output. In fact, this is a good time to make an important warning about MESA:
+
+<Aside type="danger" title="Never edit files in your MESA installation!">
+  I've said this a few times already, but **never** directly edit **any** files inside `$MESA_DIR`. This includes files in `star` and its subdirectories. Instead, copy the files you want to edit into your own work directory and edit them there.
+
+  Why is this a bad idea? After all, if you always know that you want a default value set to something other than the one in the installation, why not just change it at the root? The main reason is **reproducibility**. MESA work directories live independently of the MESA installation so that they can be portable and reproducible. If two people run the same work directory with the same release of MESA, they should get bit-for-bit identical results. If you start changing code or defaults in the MESA installation, then you've broken that reproducibility.
+
+  If you want to change a default value for a namelist control, set it explicitly in your inlist file. If you want to use a different set of history or profile columns, copy the `history_columns.list` and/or `profile_columns.list` files into your work directory and edit them there. MESA automatically prefers local copies before falling back to the defaults in `$MESA_DIR/star/defaults`.
+</Aside>
+
+### `private`
+This is where the guts of MESA star live. There are many Fortran files here that implement the physics used in stellar modeling with MESA beyond what is handled by lower-level microphysics modules like `eos`, `kap`, and `net`. You can think of this as the "private" API of MESA, which is not meant to be used by users, but rather by the higher-level modules like `star` and `binary`. You can read these files if you want to understand how MESA works, but you should never edit them directly or attempt to call functions or subroutines defined in these.
+
+### `public`
+This is where the public API of MESA star lives. The files here define the functions and subroutines that are meant to be used by users, either directly or through the higher-level modules like `star` and `binary`. You can read these files to understand how to use MESA, and use the functions and subroutines defined here in your own code (we'll learn how to do this in later tutorials). You still shouldn't edit these files, though.
+
+### `other`
+This file contains boilerplate code for functions and subroutines used in customizing MESA simulations beyond what can be done with simple inlist controls. For instance, you can use the template subroutine in `other_energy.f90` to add an energy source to a MESA simulation. Again, you should never edit these files, but you will copy from them and paste into your own work directory's Fortran files to customize your MESA simulations. We'll see specific examples of this in later tutorials.
+
+## A Standard MESA Work Directory
+Now that we've gotten a whirlwind tour of the MESA installation in general and the `star` module in particular, let's get started with a standard MESA work directory.
+
+<Task title="Create a standard MESA work directory" number={3} guideNumber={guideNumber}>
+  Create a new directory for your MESA work. This will be your first MESA simulation, so let's call it `my_first_simulation`. You can create this directory anywhere you like, but I recommend creating it in your home directory or in a dedicated directory for MESA simulations.
+  </Task>
+<Hint title="Use the standard work directory.">
+    One never creates a MESA work directory from scratch. Instead, always copy an existing work directory. In this case, we want to copy the standard work directory in the `star` module.
+</Hint>
+<Answer>
+  If you set up your `MESA_DIR` environment variable correctly, you can use the following command to create a new work directory:
+  ```bash
+  cp -r $MESA_DIR/star/work ~/my_first_simulation
+  cd ~/my_first_simulation
+  ```
+  Even if you are already in `$MESA_DIR/star`, I recommend getting used to useing `$MESA_DIR` to refer to your MESA installation directory, as this will make it easier to copy files from the MESA installation in the future, regardless of where you are in your filesystem.
+
+  You can also copy this to somewhere other than your home directory (`~/`). For instance, I keep a directory called `scratch` in my home directory where things I'm actively working on go that don't yet have a permanent home. For the remainder of this tutorial, though, I'll assume you copied the work directory to `~/my_first_simulation`.
+</Answer>
+
+We could talk about all the files in this `work` directory, but that's getting kind of dry, isn't it? Let's just run this thing and see what happens!
+<Task title="Run your first MESA simulation" number={4} guideNumber={guideNumber}>
+  Now that you have a work directory, you can compile your first MESA simulation. To do this, run the following command:
+  ```bash
+  ./mk
+  ```
+  This will compile the MESA code, creating an executable in your work directory called `star`. You should see a lot of output in the terminal as MESA compiles and runs the simulation. This is a rather big file, at several tens of megabytes; it contains all the compiled Fortran code that MESA needs to run your simulation (though your simulation may still need to read data files from your MESA installation, so it's not *completely* separate from your installation). If you see any errors, go back and check that you have set up your MESA installation correctly and that you have all the required dependencies installed.
+
+  Once the compilation is complete, you can run your first MESA simulation by executing:
+```bash
+  ./rn
+```
+</Task>
+This should start the simulation, and you should see output whizzing by in the terminal. I suggest ensuring that the terminal is wide enough that lines do not wrap, as this will make it easier to read the output. Widen your terminal so that the output looks like a series of grids that are three lines tall and 12 or 13 columns wide (depending on how you count the last one or two columns). If you see a lot of output, that's a good sign that MESA is running correctly!
+
+After awhile, you should see some graphical windows pop up showing the evolution of your star. 

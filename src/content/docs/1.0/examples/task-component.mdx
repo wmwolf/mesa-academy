@@ -1,0 +1,67 @@
+---
+title: Task Component Example
+description: Demonstrates how to use the Task component with guide number from frontmatter
+guideNumber: "0"
+slug: 1.0/examples/task-component
+---
+
+import Task from '../../../../components/Task.astro';
+
+export const guideNumber = frontmatter.guideNumber;
+
+# Task Component Example
+
+This page demonstrates how to use the Task component with guide number from frontmatter.
+
+## Basic Usage
+
+<Task title="Clone the repository" number={1} guideNumber={guideNumber}>
+  First, you'll need to clone the repository to your local machine:
+
+  ```bash
+  git clone https://github.com/example/repo.git
+  cd repo
+  ```
+</Task>
+
+<Task title="Install dependencies" number={2} guideNumber={guideNumber}>
+  Now install the required dependencies:
+
+  ```bash
+  npm install
+  ```
+
+  Make sure all dependencies are installed correctly before proceeding.
+</Task>
+
+<Task title="Run the development server" number={3} guideNumber={guideNumber}>
+  You can now start the development server:
+
+  ```bash
+  npm run dev
+  ```
+
+  Visit http://localhost:3000 to see your application running.
+
+  The Task component supports various content elements:
+
+  * List items
+  * Multiple paragraphs
+  * Code blocks
+  * And more!
+</Task>
+
+## Guide-specific Numbering
+
+You can override the guide number by providing a different value:
+
+<Task title="Guide-specific example" number={4} guideNumber="2">
+  This task will show as "Task 2.4" since we've explicitly set guideNumber="2",
+  which overrides the page's frontmatter guideNumber.
+</Task>
+
+## Manual Numbering
+
+<Task title="Custom numbered task" number={10}>
+  This task has a manually set number (10) and inherits guide number 0 from the frontmatter.
+</Task>

@@ -2,11 +2,17 @@
 import { defineConfig } from 'astro/config';
 import starlight from '@astrojs/starlight';
 import tailwindcss from '@tailwindcss/vite';
+import starlightVersions from 'starlight-versions'
 
 // https://astro.build/config
 export default defineConfig({
 	integrations: [
 		starlight({
+			plugins: [
+        		starlightVersions({
+          			versions: [{ slug: '1.0' }],
+        		}),
+			],
 			title: 'MESA Academy',
 			social: [{ icon: 'github', label: 'GitHub', href: 'https://github.com/wmwolf/mesa-academy' }],
 			sidebar: [

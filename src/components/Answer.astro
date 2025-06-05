@@ -1,0 +1,24 @@
+---
+import { Icon } from '@astrojs/starlight/components';
+
+/**
+ * Answer component that extends default details behavior with green styling.
+ * 
+ * @prop {string} title - The title text for the answer summary
+ */
+interface Props {
+  title: string;
+}
+
+const { title } = Astro.props;
+---
+
+<details class="group my-6 rounded-lg border-l-4 border-green-500 dark:border-green-400 bg-green-100 dark:bg-green-900/30">
+  <summary class="cursor-pointer text-green-900 dark:text-green-100 p-3 font-medium flex items-center gap-2 text-[1.05rem]">
+    <Icon name="approve-check-circle" size="1.2em" />
+    <span><strong>Answer:</strong> {title}</span>
+  </summary>
+  <div class="px-3 pb-3 text-[1.05rem] [&>*:last-child]:mb-0">
+    <slot />
+  </div>
+</details>

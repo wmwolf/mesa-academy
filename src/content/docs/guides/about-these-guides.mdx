@@ -5,6 +5,9 @@ guideNumber: "0"
 ---
 
 import Task from '../../../components/Task.astro';
+import Hint from '../../../components/Hint.astro';
+import Answer from '../../../components/Answer.astro';
+import { Aside } from '@astrojs/starlight/components';
 
 export const guideNumber = frontmatter.guideNumber;
 
@@ -14,11 +17,11 @@ On this page, you'll find an introduction to your author, a bit about the purpos
 
 Hi my name is [Bill Wolf](https://billwolf.space). I'm an associate professor of physics and astronomy at the [University of Wisconsin–Eau Claire](https://uwec.edu), where I teach and do research in computational astrophysics with a team of undergraduate researchers. I've been using MESA since 2012, and I've been a MESA develoepr since 2017. My research focuses on the evolution of accreting white dwarfs, but a lot of my work with MESA has been related to its [testing infrastructure](https://ui.adsabs.harvard.edu/abs/2023ApJS..269...50W/abstract).
 
-I've also been involved with most of the MESA schools since 2012, so I've had a lot of experience writing and facilitating MESA tutorials. I hope that this experience pays off for you in these guides and you're able to joing the ranks of MESA blackbelts world wide!
+I've also been involved with most of the [MESA schools](https://mesastar.org/summer-schools/) since 2012, so I've had a lot of experience writing and facilitating MESA tutorials. I hope that this experience pays off for you in these guides and you're able to joing the ranks of MESA blackbelts world wide!
 
 ## About These Guides
 
-A driving philosophy between these guies is that you should learn MESA by using it, not just by reading about it. Of course, you *do* need to read a bit about it, but I aim to keep you working on things constantly as you go. At times. As such, each of the main guides is interspersed with **Tasks** that you should complete before moving on. Don't skip these! That's where the real learning happens.
+A driving philosophy between these guies is that you should learn MESA by using it, not just by reading about it. Of course, you *do* need to read a bit about it, but I aim to keep you working on things constantly as you go. As such, each of the main guides is interspersed with **Tasks** that you should complete before moving on. Don't skip these! That's where the real learning happens.
 
 ## Acknowledgements
 
@@ -46,3 +49,84 @@ In the main body of the guides, you'll see a lot of different types of content:
   Always complete these tasks before moving on to ensure you're getting the most out of these guides!
 </Task>
 
+### Hints
+<Hint title="Click me for a hint.">
+  If you get stuck on a task, look for a hint like this one. The title will give a vague indication of what the hint is about, and if you click on it to expand it, you'll see a more detailed hint.
+</Hint>
+
+### Answers
+<Answer title="Click me for the answer.">
+  If you really get stuck, or just want to check your work, you can click on an answer like this one to see the solution. However, I recommend trying to solve the task yourself first!
+</Answer>
+
+### Asides
+Occasionally I'll provide additional information that is related, but not absolutely necessary to complete a task. These will be put in little "asides" like the examples below.
+
+<Aside>
+Some generic information that is not essential, but may be of interest.
+</Aside>
+
+<Aside type='caution'>
+This is a cautionary aside. It might warn you about something that could cause minor issues or lead to bad habits if not heeded.
+</Aside>
+
+<Aside type="danger">
+This is a warning aside. It might alert you to something that could more immediately cause significant issues if not heeded.
+</Aside>
+
+<Aside type="tip">
+This is a tip aside. It might provide you with a useful shortcut or trick that will make your life easier.
+</Aside>
+
+### Code blocks
+Of course, you'll be seeing a lot of code blocks throughout these guiedes. A basic code block looks like this:
+
+```python
+def hello_world():
+    print("Hello, world!")
+```
+
+Note that code blocks always have a handy copy button in the upper right corner. If code belongs in a particular file, I'll indicate that in the code block header. For example, if this code belongs in a file called `hello.py`, it will look like this:
+
+```python
+# hello.py
+def hello_world():
+    print("Hello, world!")
+```
+
+Commands that you should run in a terminal will appear in in what's meant to look like a little terminal window, like this:
+
+```bash
+# Run this command in your terminal
+echo $MESA_DIR
+```
+
+I may highlight specific lines in a block to draw your attention to them. For example, in the code block below, the line `echo $MESA_DIR` is highlighted:
+
+```zsh {2}
+# Run this command in your terminal
+echo $MESA_DIR
+echo `mesasdk_version`
+```
+
+or I may highlight individual words within a line, like how `/path/to/work/directory/` is highlighted below, potentially indicating that you should replace it with code more appropriate for your system or something new or important to pay attention to:
+
+```bash "/path/to/work/directory"
+cp -r $MESA_DIR/work /path/to/work/directory
+cd /path/to/work/directory
+./mk && ./rn
+```
+
+Finally, I may highlight lines that should be removed or added to a file, like this. Lines to remove will be highlighted in red and have a minus sign (`-`) in front of them, while lines to add will be highlighted in green and have a plus sign (`+`) in front of them:
+
+```diff lang="fortran" title='inlist_project'
+  initial_mass = 1.0d0
+
+```diff lang="fortran"
+  initial_mass = 1.0d0
+- stop_near_zams = .true.
++ xa_central_lower_limit_species(1) = 'h1'
++ xa_central_lower_limit(1) = 1d-3
+```
+
+In this example, the line `stop_near_zams = .true.` should be removed, and the two lines starting with `xa_central_lower_limit_species(1)` and `xa_central_lower_limit(1)` should be added.
