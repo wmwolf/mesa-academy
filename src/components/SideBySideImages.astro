@@ -1,0 +1,38 @@
+---
+/**
+ * SideBySideImages Component
+ * Displays two images side by side with equal height
+ */
+
+// Import required components
+import { Image } from 'astro:assets';
+
+// Define component props
+interface Props {
+  leftImage: ImageMetadata;
+  rightImage: ImageMetadata;
+  leftAlt: string;
+  rightAlt: string;
+  maxHeight?: number;  // Optional max height in pixels
+}
+
+// Get the component props
+const { leftImage, rightImage, leftAlt, rightAlt, maxHeight = 400 } = Astro.props;
+---
+
+<div class="flex flex-col md:flex-row gap-4 justify-center items-start my-6" style={`height: ${maxHeight}px;`}>
+  <div class="flex-1 flex justify-center items-center h-full">
+    <Image 
+      src={leftImage} 
+      alt={leftAlt} 
+      class="max-h-full max-w-full object-contain"
+    />
+  </div>
+  <div class="flex-1 flex justify-center items-center h-full">
+    <Image 
+      src={rightImage} 
+      alt={rightAlt} 
+      class="max-h-full max-w-full object-contain"
+    />
+  </div>
+</div>
