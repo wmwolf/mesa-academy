@@ -14,6 +14,10 @@ export default defineConfig({
         		}),
 			],
 			title: 'MESA Academy',
+			logo: {
+				src: '/src/assets/my-logo.svg',
+				replacesTitle: true
+			},
 			social: [{ icon: 'github', label: 'GitHub', href: 'https://github.com/wmwolf/mesa-academy' }],
 			sidebar: [
 				{
