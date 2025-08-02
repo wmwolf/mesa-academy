@@ -2,7 +2,7 @@
 import { Icon } from '@astrojs/starlight/components';
 
 /**
- * Hint component that extends default details behavior with blue/cyan styling.
+ * Hint component that mimics Starlight's Aside styling with blue/cyan colors.
  * 
  * @prop {string} title - The title text for the hint summary
  */
@@ -13,12 +13,33 @@ interface Props {
 const { title } = Astro.props;
 ---
 
-<details class="group my-6 rounded-lg border-l-4 border-blue-500 dark:border-cyan-400 bg-blue-100 dark:bg-cyan-900/30">
-  <summary class="cursor-pointer text-blue-900 dark:text-cyan-100 p-3 font-medium flex items-center gap-2 text-[1.05rem]">
-    <Icon name="puzzle" size="1.2em" />
+<details class="starlight-aside starlight-aside--hint sl-markdown-content my-6 group">
+  <summary class="starlight-aside__title cursor-pointer flex items-center gap-2">
+    <Icon name="puzzle" class="starlight-aside__icon" size="1rem" />
     <span><strong>Hint:</strong> {title}</span>
   </summary>
-  <div class="px-3 pb-3 text-[1.05rem] [&>*:last-child]:mb-0">
+  <div class="starlight-aside__content group-open:block hidden">
     <slot />
   </div>
 </details>
+
+<style>
+  .starlight-aside--hint {
+    --sl-color-asides-text-accent: var(--sl-color-blue-high);
+    --sl-color-asides-border: var(--sl-color-blue);
+    background-color: var(--sl-color-blue-low);
+  }
+  
+  .starlight-aside--hint .starlight-aside__title {
+    color: var(--sl-color-asides-text-accent);
+    margin: 0;
+  }
+  
+  .starlight-aside--hint .starlight-aside__content {
+    color: var(--sl-color-asides-text-accent);
+  }
+  
+  .starlight-aside--hint details[open] .starlight-aside__content {
+    display: block;
+  }
+</style>

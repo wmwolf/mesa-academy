@@ -2,7 +2,7 @@
 import { Icon } from '@astrojs/starlight/components';
 
 /**
- * Answer component that extends default details behavior with green styling.
+ * Answer component that mimics Starlight's Aside styling with green colors.
  * 
  * @prop {string} title - The title text for the answer summary
  */
@@ -13,12 +13,33 @@ interface Props {
 const { title } = Astro.props;
 ---
 
-<details class="group my-6 rounded-lg border-l-4 border-green-500 dark:border-green-400 bg-green-100 dark:bg-green-900/30">
-  <summary class="cursor-pointer text-green-900 dark:text-green-100 p-3 font-medium flex items-center gap-2 text-[1.05rem]">
-    <Icon name="approve-check-circle" size="1.2em" />
+<details class="starlight-aside starlight-aside--answer sl-markdown-content my-6 group">
+  <summary class="starlight-aside__title cursor-pointer flex items-center gap-2">
+    <Icon name="approve-check-circle" class="starlight-aside__icon" size="1rem" />
     <span><strong>Answer:</strong> {title}</span>
   </summary>
-  <div class="px-3 pb-3 text-[1.05rem] [&>*:last-child]:mb-0">
+  <div class="starlight-aside__content group-open:block hidden">
     <slot />
   </div>
 </details>
+
+<style>
+  .starlight-aside--answer {
+    --sl-color-asides-text-accent: var(--sl-color-green-high);
+    --sl-color-asides-border: var(--sl-color-green);
+    background-color: var(--sl-color-green-low);
+  }
+  
+  .starlight-aside--answer .starlight-aside__title {
+    color: var(--sl-color-asides-text-accent);
+    margin: 0;
+  }
+  
+  .starlight-aside--answer .starlight-aside__content {
+    color: var(--sl-color-asides-text-accent);
+  }
+  
+  .starlight-aside--answer details[open] .starlight-aside__content {
+    display: block;
+  }
+</style>

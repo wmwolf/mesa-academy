@@ -1,6 +1,8 @@
 ---
+import { Icon } from '@astrojs/starlight/components';
+
 /**
- * Task component for setting off tutorial tasks with a title and content.
+ * Task component that uses Starlight's aside styling with orange/amber colors.
  * 
  * @prop {string} title - The title of the task
  * @prop {number} number - The task number (required)
@@ -22,11 +24,29 @@ if (guideNumber) {
 }
 ---
 
-<div class="rounded-lg p-5 my-6 text-[1.05rem] bg-gray-100 dark:bg-gray-800">
-  <div class="text-[1.15rem] mb-3">
+<aside class="starlight-aside starlight-aside--task sl-markdown-content my-6">
+  <p class="starlight-aside__title flex items-center gap-2">
+    <Icon name="pencil" class="starlight-aside__icon" size="1rem" />
     <strong>{taskLabel}: {title}</strong>
-  </div>
-  <div class="[&>*:last-child]:mb-0">
+  </p>
+  <div class="starlight-aside__content">
     <slot />
   </div>
-</div>
+</aside>
+
+<style>
+  .starlight-aside--task {
+    --sl-color-asides-text-accent: var(--sl-color-gray-2);
+    --sl-color-asides-border: var(--sl-color-gray-3);
+    background-color: var(--sl-color-gray-6);
+  }
+  
+  .starlight-aside--task .starlight-aside__title {
+    color: var(--sl-color-asides-text-accent);
+    margin: 0;
+  }
+  
+  .starlight-aside--task .starlight-aside__content {
+    color: var(--sl-color-asides-text-accent);
+  }
+</style>
