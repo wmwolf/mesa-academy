@@ -40,6 +40,15 @@ export default defineConfig({
 				},
 			],
 			customCss: ['./src/styles/global.css'],
+			head: [
+				{
+					tag: 'script',
+					attrs: {
+						src: '/src/scripts/progress-tracker.js',
+						type: 'module'
+					}
+				}
+			],
 		}),
 	],
 	vite: {

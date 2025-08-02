@@ -7,11 +7,15 @@ guideNumber: "0"
 import Task from '../../../components/Task.astro';
 import Hint from '../../../components/Hint.astro';
 import Answer from '../../../components/Answer.astro';
+import LearningObjective from '../../../components/LearningObjective.astro';
+import LearningObjectivesSummary from '../../../components/LearningObjectivesSummary.astro';
 import { Aside } from '@astrojs/starlight/components';
 
 export const guideNumber = frontmatter.guideNumber;
 
 On this page, you'll find an introduction to your author, a bit about the purpose of these tutorials, and some of the conventions used in these tutorials.
+
+<LearningObjectivesSummary />
 
 ## About the Author
 
@@ -22,6 +26,8 @@ I've also been involved with most of the [MESA schools](https://mesastar.org/sum
 ## About These Tutorials
 
 A driving philosophy between these guies is that you should learn MESA by using it, not just by reading about it. Of course, you *do* need to read a bit about it, but I aim to keep you working on things constantly as you go. As such, each of the main tutorials is interspersed with **Tasks** that you should complete before moving on. Don't skip these! That's where the real learning happens.
+
+<LearningObjective statement="understand the hands-on learning philosophy of MESA Academy" number={1} guideNumber={guideNumber} />
 
 ## Acknowledgements
 
@@ -48,6 +54,8 @@ In the main body of the tutorials, you'll see a lot of different types of conten
   
   Always complete these tasks before moving on to ensure you're getting the most out of these tutorials!
 </Task>
+
+<LearningObjective statement="identify and use Tasks, Hints, Answers, and Asides in the tutorials" number={2} guideNumber={guideNumber} />
 
 ### Hints
 <Hint title="Click me for a hint.">
@@ -130,3 +138,5 @@ Finally, I may highlight lines that should be removed or added to a file, like t
 ```
 
 In this example, the line `stop_near_zams = .true.` should be removed, and the two lines starting with `xa_central_lower_limit_species(1)` and `xa_central_lower_limit(1)` should be added.
+
+<LearningObjective statement="navigate the tutorial interface and understand code block conventions" number={3} guideNumber={guideNumber} />

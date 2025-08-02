@@ -1,0 +1,121 @@
+---
+import { Icon } from '@astrojs/starlight/components';
+
+/**
+ * Learning Objective component with checkbox and "I can..." statement.
+ * 
+ * @prop {string} statement - The "I can..." learning objective statement
+ * @prop {number} number - The objective number (required)
+ * @prop {string} [guideNumber] - Guide number to use for the objective
+ */
+interface Props {
+  statement: string;
+  number: number;
+  guideNumber?: string;
+}
+
+const { statement, number, guideNumber } = Astro.props;
+
+// Format the objective ID based on whether we have a guideNumber
+let objectiveId = `learning-objective-${number}`;
+let objectiveLabel = `Learning Objective ${number}`;
+if (guideNumber) {
+  objectiveId = `learning-objective-${guideNumber}-${number}`;
+  objectiveLabel = `Learning Objective ${guideNumber}.${number}`;
+}
+---
+
+<aside class="starlight-aside starlight-aside--learning-objective sl-markdown-content my-6">
+  <div class="starlight-aside__content">
+    <div class="learning-objective-container">
+      <input 
+        type="checkbox" 
+        id={objectiveId}
+        class="learning-objective-checkbox"
+        aria-describedby={`${objectiveId}-label`}
+      />
+      <label for={objectiveId} id={`${objectiveId}-label`} class="learning-objective-label">
+        <div class="learning-objective-header">
+          <Icon name="star" class="starlight-aside__icon" size="1rem" />
+          <strong>{objectiveLabel}:</strong>
+        </div>
+        <div class="learning-objective-statement">
+          I <span class="can-text">can</span> {statement}
+        </div>
+      </label>
+    </div>
+  </div>
+</aside>
+
+<style>
+  .starlight-aside--learning-objective {
+    --sl-color-asides-text-accent: var(--sl-color-orange-high);
+    --sl-color-asides-border: var(--sl-color-orange);
+    background-color: var(--sl-color-orange-low);
+    border: 1px solid var(--sl-color-asides-border);
+    transition: all 0.3s ease;
+  }
+  
+  .learning-objective-container {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+  }
+  
+  .learning-objective-checkbox {
+    margin-top: 0.25rem;
+    width: 1.25rem;
+    height: 1.25rem;
+    flex-shrink: 0;
+    cursor: pointer;
+    accent-color: var(--sl-color-green);
+  }
+  
+  .learning-objective-label {
+    flex: 1;
+    cursor: pointer;
+    color: var(--sl-color-asides-text-accent);
+    line-height: 1.5;
+  }
+  
+  .learning-objective-header {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 0.5rem;
+  }
+  
+  .learning-objective-header .starlight-aside__icon {
+    color: var(--sl-color-orange);
+    transition: color 0.3s ease;
+  }
+  
+  .learning-objective-statement {
+    font-style: italic;
+    margin-left: 1.5rem;
+  }
+  
+  .learning-objective-statement .can-text {
+    transition: all 0.3s ease;
+  }
+  
+  /* Checked state - transition to green */
+  .learning-objective-checkbox:checked + .learning-objective-label {
+    --sl-color-asides-text-accent: var(--sl-color-green-high);
+  }
+  
+  .starlight-aside--learning-objective:has(.learning-objective-checkbox:checked) {
+    --sl-color-asides-text-accent: var(--sl-color-green-high);
+    --sl-color-asides-border: var(--sl-color-green);
+    background-color: var(--sl-color-green-low);
+  }
+  
+  .learning-objective-checkbox:checked + .learning-objective-label .learning-objective-header .starlight-aside__icon {
+    color: var(--sl-color-green);
+  }
+  
+  .learning-objective-checkbox:checked + .learning-objective-label .can-text {
+    font-weight: bold;
+    text-transform: uppercase;
+  }
+</style>

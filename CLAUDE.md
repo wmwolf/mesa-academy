@@ -38,3 +38,138 @@ MESA Academy is a documentation site built with Astro and Starlight, focused on 
 ### Sidebar Configuration
 
 Sidebar structure is defined both in `astro.config.mjs` (main) and version-specific JSON files in `src/content/versions/` for versioned content.
+
+## Interactive Features Implementation Plan
+
+### Phase 1: Learning Objectives Component
+**Goal**: Create new component with checkbox and localStorage persistence
+
+**Tasks**:
+1. Create `src/components/LearningObjective.astro`
+   - Blue color scheme following existing Task/Answer patterns
+   - Checkbox with "I can..." statement structure
+   - Unique ID generation: `learning-objective-{guide-number}-{objective-number}`
+2. Add client-side JavaScript foundation
+   - Version detection system (multiple fallback approaches)
+   - localStorage management with version-specific keys
+   - Checkbox interaction handling
+3. Version Detection Strategy:
+   - **URL-based**: Parse `window.location.pathname` for version prefix
+   - **Examples**: `/1.0/guides/...` → "1.0", `/2024.08.1/guides/...` → "2024.08.1"  
+   - **Default**: Use current version (e.g., "2024.08.1") if no version prefix found
+   - **Critical**: Update default version in `getCurrentVersion()` function when releasing new versions
+4. localStorage Data Structure:
+   ```javascript
+   {
+     "mesa-academy-progress": {
+       "2024.08.1": {
+         "learning-objectives": {
+           "1-1": true,
+           "2-3": false
+         },
+         "tasks": {},
+         "answers": {}
+       },
+       "latest": { ... }
+     }
+   }
+   ```
+
+### Phase 2: Task/Answer Checkbox Enhancement
+**Goal**: Add checkboxes to existing components with state synchronization
+
+**Tasks**:
+1. Modify `src/components/Task.astro`
+   - Add checkbox with ID: `task-{guide-number}-{task-number}`
+   - Maintain existing styling and layout
+2. Modify `src/components/Answer.astro`
+   - Add checkbox with `data-task="{guide-number}-{task-number}"`
+   - Sync state with corresponding task checkbox
+3. Expand JavaScript system
+   - Task-answer pairing logic
+   - Bidirectional checkbox synchronization
+   - localStorage integration for both task and answer states
+
+### Phase 3: Sidebar Enhancement
+**Goal**: Add dynamic task/objective tracking to sidebar
+
+**Tasks**:
+1. Research Starlight sidebar override system
+   - Create custom sidebar component override
+   - Maintain existing TOC functionality
+2. Create sidebar sections:
+   - "Learning Objectives" section with checkboxes
+   - "Tasks" section with progress indicators
+   - Real-time updates as checkboxes change
+3. Page scanning and population
+   - DOM scan for all tasks/objectives on page load
+   - Dynamic sidebar population
+   - Mobile-responsive design considerations
+
+### Implementation Approach
+
+**Convention-Based System**:
+- Task IDs: `task-{guide}-{number}` (e.g., `task-1-2`)
+- Answer linking: `data-task="{guide}-{number}"`
+- Learning Objective IDs: `learning-objective-{guide}-{number}`
+
+**JavaScript Architecture**:
+- Single script handles all interactions
+- Page load scan builds complete state map
+- Event delegation for efficient checkbox handling
+- Centralized localStorage management
+
+**Version Support**:
+- All progress data segmented by version
+- Version detection via URL analysis + fallbacks
+- Future-proof for new MESA releases (2024.08.1+)
+
+### File Structure
+```
+src/
+├── components/
+│   ├── Task.astro (modified)
+│   ├── Answer.astro (modified)
+│   ├── LearningObjective.astro (new)
+│   └── Hint.astro (existing)
+├── scripts/
+│   └── progress-tracker.js (new)
+└── layouts/
+    └── custom-sidebar.astro (new, if needed)
+```
+
+### Testing Strategy
+- Test localStorage persistence across browser sessions
+- Verify checkbox synchronization between tasks/answers
+- Ensure version isolation works correctly
+- Mobile responsiveness testing
+- Accessibility compliance (keyboard navigation, screen readers)
+
+### Current Status (Session End 2025-08-02)
+
+**✅ Phase 1 COMPLETED:**
+- LearningObjective.astro component working with orange→green color transitions
+- progress-tracker.js with version-specific localStorage 
+- LearningObjectivesSummary.astro auto-populating objectives
+- Green checkboxes and smooth color transitions
+- Version detection and isolation working
+
+**🔧 IMMEDIATE NEXT TASK:**
+**LearningObjectivesSummary table styling issue** - CSS styles not being applied despite `!important` rules:
+- Table still shows horizontal border lines (Starlight default table styling)
+- Objective numbers (0.1, 0.2, 0.3) not bold despite CSS rules
+- Need to investigate Starlight's CSS specificity and find stronger selectors
+- Consider alternative approaches: CSS modules, inline styles, or non-table layout
+- Located in: `src/components/LearningObjectivesSummary.astro`
+
+**Next Session TODO:**
+1. Fix table styling in LearningObjectivesSummary (bold numbers, no borders)
+2. Begin Phase 2: Add checkboxes to Task.astro and Answer.astro components
+3. Implement task-answer checkbox synchronization
+
+### Future Enhancements (Phase 4+)
+- **Dynamic Summary Colors**: Make the LearningObjectivesSummary component change from orange (incomplete) to green (complete) based on completion status of all objectives on the page. This requires:
+  - Real-time monitoring of checkbox states
+  - Completion percentage calculation
+  - Dynamic CSS class/style updates
+  - State persistence across page loads

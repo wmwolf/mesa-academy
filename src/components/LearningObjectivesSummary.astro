@@ -1,0 +1,79 @@
+---
+/**
+ * Learning Objectives Summary component that automatically scans page content
+ * and displays a preview of all learning objectives.
+ */
+---
+
+<aside class="starlight-aside starlight-aside--objectives-summary sl-markdown-content my-6">
+  <p class="starlight-aside__title">
+    <strong>Learning Objectives</strong>
+  </p>
+  <div class="starlight-aside__content">
+    <p>After completing this tutorial, you'll be able to...</p>
+    <table id="objectives-summary-list" class="objectives-table">
+      <!-- Learning objectives will be populated here by JavaScript -->
+    </table>
+  </div>
+</aside>
+
+<style>
+  .starlight-aside--objectives-summary {
+    --sl-color-asides-text-accent: var(--sl-color-orange-high);
+    --sl-color-asides-border: var(--sl-color-orange);
+    background-color: var(--sl-color-orange-low);
+    border: 1px solid var(--sl-color-asides-border);
+  }
+  
+  .starlight-aside--objectives-summary .starlight-aside__title {
+    color: var(--sl-color-asides-text-accent);
+    margin: 0 0 0.5rem 0;
+  }
+  
+  .starlight-aside--objectives-summary .starlight-aside__content {
+    color: var(--sl-color-asides-text-accent);
+  }
+  
+  .starlight-aside--objectives-summary .objectives-table {
+    width: 100% !important;
+    border-collapse: collapse !important;
+    margin: 0 !important;
+    border: none !important;
+    background: transparent !important;
+  }
+  
+  .starlight-aside--objectives-summary .objectives-table td {
+    padding: 0.5rem 0 !important;
+    border: none !important;
+    border-bottom: none !important;
+    border-top: none !important;
+    vertical-align: top !important;
+    background: transparent !important;
+  }
+  
+  .starlight-aside--objectives-summary .objectives-table tr {
+    border: none !important;
+    border-bottom: none !important;
+    border-top: none !important;
+    background: transparent !important;
+  }
+  
+  .starlight-aside--objectives-summary .objectives-table td:first-child {
+    width: 3rem !important;
+    padding-right: 1rem !important;
+    font-weight: bold !important;
+    text-align: left !important;
+  }
+  
+  .starlight-aside--objectives-summary .objective-number {
+    font-weight: bold !important;
+    color: var(--sl-color-orange) !important;
+    font-size: 0.9rem !important;
+    display: inline-block !important;
+  }
+  
+  .starlight-aside--objectives-summary .objective-statement {
+    font-style: italic !important;
+    line-height: 1.4 !important;
+  }
+</style>
