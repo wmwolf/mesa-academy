@@ -19,13 +19,16 @@ const { title, number, guideNumber } = Astro.props;
 
 // Format the task label based on whether we have a guideNumber
 let taskLabel = `Task ${number}`;
+let taskId = `task-${number}`;
 if (guideNumber) {
   taskLabel = `Task ${guideNumber}.${number}`;
+  taskId = `task-${guideNumber}-${number}`;
 }
 ---
 
 <aside class="starlight-aside starlight-aside--task sl-markdown-content my-6">
   <p class="starlight-aside__title flex items-center gap-2">
+    <input type="checkbox" id={taskId} class="task-checkbox w-4 h-4 mr-2 accent-gray-500" />
     <Icon name="pencil" class="starlight-aside__icon" size="1rem" />
     <strong>{taskLabel}: {title}</strong>
   </p>

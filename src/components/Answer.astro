@@ -20,6 +20,11 @@ const { title } = Astro.props;
   </summary>
   <div class="starlight-aside__content group-open:block hidden">
     <slot />
+    <hr class="my-4 border-t border-gray-300 dark:border-gray-600" />
+    <div class="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400">
+      <input type="checkbox" class="answer-checkbox w-4 h-4 accent-green-600" />
+      <span class="answer-checkbox-text">Have you completed the associated task?</span>
+    </div>
   </div>
 </details>
 

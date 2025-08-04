@@ -107,6 +107,9 @@ class ProgressTracker {
     // Initialize learning objectives
     this.initializeLearningObjectives();
     
+    // Initialize tasks and answers
+    this.initializeTasksAndAnswers();
+    
     // Populate objectives summary
     this.populateObjectivesSummary();
     
@@ -128,15 +131,141 @@ class ProgressTracker {
   }
 
   /**
+   * Initialize task and answer checkboxes with DOM-based bidirectional synchronization
+   */
+  initializeTasksAndAnswers() {
+    // Build task-answer pairs using DOM traversal
+    this.taskAnswerPairs = this.buildTaskAnswerPairs();
+    
+    // Initialize task checkboxes
+    const taskCheckboxes = document.querySelectorAll('.task-checkbox');
+    taskCheckboxes.forEach(checkbox => {
+      const id = checkbox.id.replace('task-', '');
+      const checked = this.getItemState('tasks', id);
+      checkbox.checked = checked;
+    });
+
+    // Initialize answer checkboxes and sync with tasks
+    this.taskAnswerPairs.forEach(pair => {
+      const { taskId, answerCheckbox } = pair;
+      const checked = this.getItemState('answers', taskId);
+      answerCheckbox.checked = checked;
+      
+      // Update the answer checkbox text with the actual task title
+      this.updateAnswerCheckboxText(pair);
+      
+      // If answer is checked but corresponding task isn't, sync them
+      if (checked) {
+        const correspondingTask = document.getElementById(`task-${taskId}`);
+        if (correspondingTask && !correspondingTask.checked) {
+          correspondingTask.checked = true;
+          this.setItemState('tasks', taskId, true);
+        }
+      }
+    });
+  }
+
+  /**
+   * Build task-answer pairs by finding the next answer after each task in the DOM
+   */
+  buildTaskAnswerPairs() {
+    const pairs = [];
+    const taskCheckboxes = document.querySelectorAll('.task-checkbox');
+    
+    taskCheckboxes.forEach(taskCheckbox => {
+      const taskId = taskCheckbox.id.replace('task-', '');
+      const taskElement = taskCheckbox.closest('.starlight-aside--task');
+      
+      if (taskElement) {
+        // Find the next answer element after this task, but stop if we hit another task
+        let nextElement = taskElement.nextElementSibling;
+        while (nextElement) {
+          if (nextElement.classList.contains('starlight-aside--answer')) {
+            const answerCheckbox = nextElement.querySelector('.answer-checkbox');
+            if (answerCheckbox) {
+              pairs.push({ 
+                taskId, 
+                taskCheckbox, 
+                answerCheckbox, 
+                taskElement, 
+                answerElement: nextElement 
+              });
+            }
+            break;
+          }
+          // Stop if we encounter another task - this means the current task has no answer
+          else if (nextElement.classList.contains('starlight-aside--task')) {
+            break;
+          }
+          nextElement = nextElement.nextElementSibling;
+        }
+      }
+    });
+    
+    console.log(`Found ${pairs.length} task-answer pairs:`, pairs.map(p => p.taskId));
+    return pairs;
+  }
+
+  /**
+   * Update the answer checkbox text to include the actual task title
+   */
+  updateAnswerCheckboxText(pair) {
+    const { taskElement, answerElement } = pair;
+    const textSpan = answerElement.querySelector('.answer-checkbox-text');
+    
+    if (textSpan && taskElement) {
+      // Extract the task title from the task element
+      const taskTitleElement = taskElement.querySelector('.starlight-aside__title strong');
+      if (taskTitleElement) {
+        const taskTitle = taskTitleElement.textContent.trim();
+        textSpan.textContent = `Completed ${taskTitle}`;
+      }
+    }
+  }
+
+  /**
    * Set up event listeners for checkbox interactions
    */
   setupEventListeners() {
-    // Learning objective checkboxes
     document.addEventListener('change', (event) => {
+      // Learning objective checkboxes
       if (event.target.classList.contains('learning-objective-checkbox')) {
         const id = event.target.id.replace('learning-objective-', '');
         this.setItemState('learning-objectives', id, event.target.checked);
         console.log(`Learning objective ${id} ${event.target.checked ? 'completed' : 'unchecked'}`);
+      }
+      
+      // Task checkboxes
+      else if (event.target.classList.contains('task-checkbox')) {
+        const id = event.target.id.replace('task-', '');
+        this.setItemState('tasks', id, event.target.checked);
+        
+        // Find corresponding answer checkbox using DOM pairs
+        const pair = this.taskAnswerPairs.find(p => p.taskId === id);
+        if (pair && pair.answerCheckbox) {
+          pair.answerCheckbox.checked = event.target.checked;
+          this.setItemState('answers', id, event.target.checked);
+        }
+        
+        console.log(`Task ${id} ${event.target.checked ? 'completed' : 'unchecked'}`);
+      }
+      
+      // Answer checkboxes
+      else if (event.target.classList.contains('answer-checkbox')) {
+        // Find corresponding task using DOM pairs
+        const pair = this.taskAnswerPairs.find(p => p.answerCheckbox === event.target);
+        if (pair) {
+          const taskId = pair.taskId;
+          this.setItemState('answers', taskId, event.target.checked);
+          
+          // Sync with corresponding task checkbox
+          if (pair.taskCheckbox) {
+            pair.taskCheckbox.checked = event.target.checked;
+            this.setItemState('tasks', taskId, event.target.checked);
+          }
+          
+          console.log(`Answer for task ${taskId} ${event.target.checked ? 'completed' : 'unchecked'}`);
+        }
       }
     });
   }
