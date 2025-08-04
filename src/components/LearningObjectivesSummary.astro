@@ -5,75 +5,71 @@
  */
 ---
 
-<aside class="starlight-aside starlight-aside--objectives-summary sl-markdown-content my-6">
-  <p class="starlight-aside__title">
-    <strong>Learning Objectives</strong>
-  </p>
-  <div class="starlight-aside__content">
-    <p>After completing this tutorial, you'll be able to...</p>
-    <table id="objectives-summary-list" class="objectives-table">
-      <!-- Learning objectives will be populated here by JavaScript -->
-    </table>
+<div class="objectives-summary-container">
+  <h3 class="objectives-summary-title">Learning Objectives</h3>
+  <p class="objectives-summary-intro">After completing this tutorial, you'll be able to...</p>
+  <div id="objectives-summary-list">
+    <!-- Learning objectives will be populated here by JavaScript -->
   </div>
-</aside>
+</div>
 
 <style>
-  .starlight-aside--objectives-summary {
-    --sl-color-asides-text-accent: var(--sl-color-orange-high);
-    --sl-color-asides-border: var(--sl-color-orange);
-    background-color: var(--sl-color-orange-low);
-    border: 1px solid var(--sl-color-asides-border);
+  .objectives-summary-container {
+    margin: 1.5rem 0;
+    padding: 1.25rem;
+    border: 1px solid var(--sl-color-gray-3);
+    border-radius: 0.5rem;
+    background-color: var(--sl-color-gray-6);
   }
   
-  .starlight-aside--objectives-summary .starlight-aside__title {
-    color: var(--sl-color-asides-text-accent);
-    margin: 0 0 0.5rem 0;
+  /* Dark mode styling */
+  [data-theme="dark"] .objectives-summary-container {
+    border-color: var(--sl-color-gray-4);
+    background-color: var(--sl-color-gray-7);
   }
   
-  .starlight-aside--objectives-summary .starlight-aside__content {
-    color: var(--sl-color-asides-text-accent);
+  .objectives-summary-title {
+    margin: 0 0 0.75rem 0;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--sl-color-text);
   }
   
-  .starlight-aside--objectives-summary .objectives-table {
-    width: 100% !important;
-    border-collapse: collapse !important;
-    margin: 0 !important;
-    border: none !important;
-    background: transparent !important;
+  .objectives-summary-intro {
+    margin: 0 0 1rem 0;
+    color: var(--sl-color-text);
+    font-size: 0.95rem;
   }
   
-  .starlight-aside--objectives-summary .objectives-table td {
-    padding: 0.5rem 0 !important;
-    border: none !important;
-    border-bottom: none !important;
-    border-top: none !important;
-    vertical-align: top !important;
-    background: transparent !important;
+  #objectives-summary-list {
+    margin: 0;
+    padding: 0;
   }
   
-  .starlight-aside--objectives-summary .objectives-table tr {
-    border: none !important;
-    border-bottom: none !important;
-    border-top: none !important;
-    background: transparent !important;
+  /* Global styles for dynamically generated content */
+  :global(#objectives-summary-list .objective-item) {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 0.5rem;
   }
   
-  .starlight-aside--objectives-summary .objectives-table td:first-child {
-    width: 3rem !important;
-    padding-right: 1rem !important;
-    font-weight: bold !important;
-    text-align: left !important;
+  :global(#objectives-summary-list .objective-item:last-child) {
+    margin-bottom: 0;
   }
   
-  .starlight-aside--objectives-summary .objective-number {
-    font-weight: bold !important;
-    color: var(--sl-color-orange) !important;
-    font-size: 0.9rem !important;
-    display: inline-block !important;
+  :global(#objectives-summary-list .objective-label) {
+    font-weight: bold;
+    color: var(--sl-color-text);
+    font-size: 0.9rem;
+    min-width: 2.5rem;
+    margin-right: 1rem;
+    flex-shrink: 0;
   }
   
-  .starlight-aside--objectives-summary .objective-statement {
-    font-style: italic !important;
-    line-height: 1.4 !important;
+  :global(#objectives-summary-list .objective-text) {
+    font-style: italic;
+    line-height: 1.4;
+    color: var(--sl-color-text);
+    flex: 1;
   }
 </style>

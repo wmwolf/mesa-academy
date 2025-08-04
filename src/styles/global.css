@@ -8,6 +8,17 @@
 
 @theme {
 	--font-sans: 'Inter Variable', 'Inter', system-ui, sans-serif;
+	
+	/* Generated accent color palettes. */
+	--color-accent-200: #b2c7ff;
+	--color-accent-600: #3650f7;
+	--color-accent-900: #192970;
+	--color-accent-950: #141f4b;
+	/* Generated gray color palettes. */
+	--color-gray-100: #f5f6f8;
+	--color-gray-200: #eceef2;
+	--color-gray-300: #c0c2c7;
+	--color-gray-400: #888b96;
 }
 
 /*

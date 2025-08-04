@@ -163,10 +163,10 @@ class ProgressTracker {
       const number = headerDiv.textContent.replace('Learning Objective ', '').replace(':', '');
       
       return `
-        <tr>
-          <td><span class="objective-number">${number}</span></td>
-          <td><span class="objective-statement">${statement}</span></td>
-        </tr>
+        <div class="objective-item">
+          <span class="objective-label">${number}</span>
+          <span class="objective-text">${statement}</span>
+        </div>
       `;
     }).join('');
     
