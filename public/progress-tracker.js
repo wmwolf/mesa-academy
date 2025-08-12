@@ -270,6 +270,10 @@ class ProgressTracker {
       if (event.target.classList.contains('learning-objective-checkbox')) {
         const id = event.target.id.replace('learning-objective-', '');
         this.setItemState('learning-objectives', id, event.target.checked);
+        
+        // Update sidebar objective status
+        this.updateSidebarObjectiveStatus(event.target.id, event.target.checked);
+        
         console.log(`Learning objective ${id} ${event.target.checked ? 'completed' : 'unchecked'}`);
       }
       
@@ -337,7 +341,7 @@ class ProgressTracker {
       
       return `
         <div class="objective-item">
-          <span class="objective-label">${number}</span>
+          <span class="objective-label">Objective ${number}</span>
           <span class="objective-text">${statement}</span>
         </div>
       `;
@@ -358,7 +362,7 @@ class ProgressTracker {
    * Populate the sidebar learning objectives summary with navigation
    */
   populateSidebarObjectives() {
-    const sidebarContainer = document.querySelector('.progress-sections #objectives-summary-list');
+    const sidebarContainer = document.querySelector('.right-sidebar-panel #objectives-summary-list');
     if (!sidebarContainer) return;
     
     const objectiveCheckboxes = document.querySelectorAll('.learning-objective-checkbox');
@@ -373,8 +377,8 @@ class ProgressTracker {
       const number = headerDiv.textContent.replace('Learning Objective ', '').replace(':', '');
       
       return `
-        <div class="objective-item" data-target-id="${checkbox.id}">
-          <span class="objective-label">${number}</span>
+        <div class="objective-item ${checkbox.checked ? 'completed' : ''}" data-target-id="${checkbox.id}" data-objective-id="${checkbox.id}">
+          <span class="objective-label">Objective ${number}</span>
           <span class="objective-text">${statement}</span>
         </div>
       `;
@@ -411,7 +415,7 @@ class ProgressTracker {
         <div class="task-item">
           <a href="#task-${taskId}" class="task-link" data-target-id="task-${taskId}">
             <span class="task-status ${checkbox.checked ? 'completed' : 'incomplete'}" data-task-id="${taskId}">
-              ${checkbox.checked ? '✓' : '⭕️'}
+              ${checkbox.checked ? '✓' : '☐'}
             </span>
             <span class="task-label">${taskNumber}</span>
             <span class="task-title">${displayTitle}</span>
@@ -467,8 +471,22 @@ class ProgressTracker {
   updateSidebarTaskStatus(taskId, completed) {
     const statusElement = document.querySelector(`[data-task-id="${taskId}"]`);
     if (statusElement) {
-      statusElement.textContent = completed ? '✓' : '⭕️';
+      statusElement.textContent = completed ? '✓' : '☐';
       statusElement.className = `task-status ${completed ? 'completed' : 'incomplete'}`;
+    }
+  }
+
+  /**
+   * Update sidebar objective completion status
+   */
+  updateSidebarObjectiveStatus(objectiveId, completed) {
+    const objectiveElement = document.querySelector(`[data-objective-id="${objectiveId}"]`);
+    if (objectiveElement) {
+      if (completed) {
+        objectiveElement.classList.add('completed');
+      } else {
+        objectiveElement.classList.remove('completed');
+      }
     }
   }
 

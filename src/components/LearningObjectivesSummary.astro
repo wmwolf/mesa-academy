@@ -7,7 +7,7 @@
 
 <div class="objectives-summary-container">
   <h3 class="objectives-summary-title">Learning Objectives</h3>
-  <p class="objectives-summary-intro">After completing this tutorial, you'll be able to...</p>
+  <p class="objectives-summary-intro">After completing this tutorial, you will be able to…</p>
   <div id="objectives-summary-list">
     <!-- Learning objectives will be populated here by JavaScript -->
   </div>
@@ -15,42 +15,40 @@
 
 <style>
   .objectives-summary-container {
-    margin: 1.5rem 0;
-    padding: 1.25rem;
-    border: 1px solid var(--sl-color-gray-3);
-    border-radius: 0.5rem;
-    background-color: var(--sl-color-gray-6);
-  }
-  
-  /* Dark mode styling */
-  [data-theme="dark"] .objectives-summary-container {
-    border-color: var(--sl-color-gray-4);
-    background-color: var(--sl-color-gray-7);
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--sl-color-hairline);
+    display: flex;
+    flex-direction: column;
+    height: 100%; /* Take full height from parent flex container */
   }
   
   .objectives-summary-title {
-    margin: 0 0 0.75rem 0;
-    font-size: 1.1rem;
+    margin: 0 0 0.5rem 0;
+    font-size: var(--sl-text-sm);
     font-weight: 600;
-    color: var(--sl-color-text);
+    color: var(--sl-color-white);
   }
   
   .objectives-summary-intro {
-    margin: 0 0 1rem 0;
-    color: var(--sl-color-text);
-    font-size: 0.95rem;
+    margin: 0 0 0.75rem 0;
+    font-size: var(--sl-text-xs);
+    color: var(--sl-color-gray-2);
+    line-height: 1.3;
   }
   
   #objectives-summary-list {
     margin: 0;
     padding: 0;
+    overflow-y: auto;
+    flex: 1;
   }
   
   /* Global styles for dynamically generated content */
   :global(#objectives-summary-list .objective-item) {
-    display: flex;
-    align-items: flex-start;
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.75rem;
+    cursor: pointer;
+    transition: color 0.2s ease;
   }
   
   :global(#objectives-summary-list .objective-item:last-child) {
@@ -58,18 +56,40 @@
   }
   
   :global(#objectives-summary-list .objective-label) {
-    font-weight: bold;
-    color: var(--sl-color-text);
-    font-size: 0.9rem;
-    min-width: 2.5rem;
-    margin-right: 1rem;
-    flex-shrink: 0;
+    font-weight: 600;
+    font-size: var(--sl-text-xs);
+    color: var(--sl-color-gray-2);
+    display: block;
+    margin-bottom: 0.25rem;
+    transition: color 0.2s ease;
   }
   
   :global(#objectives-summary-list .objective-text) {
-    font-style: italic;
-    line-height: 1.4;
-    color: var(--sl-color-text);
-    flex: 1;
+    font-size: var(--sl-text-xs);
+    line-height: 1.3;
+    color: var(--sl-color-gray-2);
+    display: block;
+    white-space: normal;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    transition: color 0.2s ease;
+  }
+  
+  /* Completed objective styling */
+  :global(#objectives-summary-list .objective-item.completed .objective-label) {
+    color: var(--color-green-600); /* Darker green for light mode */
+  }
+  
+  :global(#objectives-summary-list .objective-item.completed .objective-text) {
+    color: var(--color-green-600); /* Darker green for light mode */
+  }
+  
+  /* Dark mode completed styling */
+  :global([data-theme="dark"] #objectives-summary-list .objective-item.completed .objective-label) {
+    color: var(--color-green-400); /* Lighter green for dark mode */
+  }
+  
+  :global([data-theme="dark"] #objectives-summary-list .objective-item.completed .objective-text) {
+    color: var(--color-green-400); /* Lighter green for dark mode */
   }
 </style>

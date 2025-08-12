@@ -1,6 +1,5 @@
 ---
 import MobileTableOfContents from 'virtual:starlight/components/MobileTableOfContents';
-import TableOfContents from 'virtual:starlight/components/TableOfContents';
 import LearningObjectivesSummary from './LearningObjectivesSummary.astro';
 import TasksSummary from './TasksSummary.astro';
 
@@ -9,208 +8,54 @@ const { toc } = Astro.locals.starlightRoute;
 
 {toc && (
   <>
-    <!-- Mobile TOC (maintain existing behavior) -->
-    <div class="lg:sl-hidden">
+    <div class="md:sl-hidden">
       <MobileTableOfContents />
     </div>
-    
-    <!-- Desktop Enhanced Sidebar -->
     <div class="right-sidebar-panel sl-hidden lg:sl-block">
       <div class="sl-container">
-        <!-- Progress tracking sections (desktop only) -->
-        <div class="progress-sections">
-          <LearningObjectivesSummary />
-          <TasksSummary />
-        </div>
-        
-        <!-- Existing table of contents with default styling -->
-        <TableOfContents />
+        <LearningObjectivesSummary />
+        <TasksSummary />
       </div>
     </div>
   </>
 )}
 
 <style>
-  /* Override default right sidebar styling to match left sidebar */
-  :global(.right-sidebar-panel) {
-    background-color: var(--sl-color-bg-sidebar);
-    border-inline-start: 1px solid var(--sl-color-hairline-shade);
-    padding: 1rem var(--sl-sidebar-pad-x);
-    width: var(--sl-sidebar-width);
-    max-width: var(--sl-sidebar-width);
-    margin-inline-end: 0;
-    right: 0;
-    position: sticky;
-  }
-
-  :global(.right-sidebar-panel .sl-container) {
-    padding: 0;
-    max-width: none;
-    height: 100vh;
-    display: flex;
-    flex-direction: column;
-  }
-
-  .progress-sections {
-    margin-bottom: 1.5rem;
-    /* Isolate our styles from affecting TOC */
-    isolation: isolate;
-  }
-  
-  /* Modify the LearningObjectivesSummary when in sidebar context */
-  .progress-sections :global(.objectives-summary-container) {
-    margin: 0 0 1.5rem 0;
-    padding: 0 0 1rem 0;
-    border-bottom: 1px solid var(--sl-color-hairline);
-    border-radius: 0;
-    background-color: transparent;
-    border-left: none;
-    border-right: none;
-    border-top: none;
-    max-height: calc(16.67vh - 1rem); /* 1/6 of viewport height minus padding */
-    display: flex;
-    flex-direction: column;
-  }
-  
-  .progress-sections :global(.objectives-summary-container #objectives-summary-list) {
-    overflow-y: auto;
-    flex: 1;
-  }
-  
-  .progress-sections :global(.objectives-summary-title) {
-    font-size: var(--sl-text-sm);
-    font-weight: 600;
-    color: var(--sl-color-white);
-    margin-bottom: 0.75rem;
-  }
-  
-  .progress-sections :global(.objectives-summary-intro) {
-    font-size: var(--sl-text-xs);
-    color: var(--sl-color-gray-2);
-    margin-bottom: 0.75rem;
-  }
-  
-  /* Make objective items clickable in sidebar - only within progress-sections */
-  .progress-sections :global(.objective-item) {
-    cursor: pointer;
-    border-radius: 0.25rem;
-    padding: 0.25rem;
-    margin: -0.25rem -0.25rem 0.25rem -0.25rem;
-    transition: background-color 0.2s ease, color 0.2s ease;
-  }
-  
-  .progress-sections :global(.objective-label),
-  .progress-sections :global(.objective-text) {
-    color: var(--sl-color-gray-2);
-    font-size: var(--sl-text-xs);
-  }
-  
-  .progress-sections :global(.objective-item:hover) {
-    background-color: var(--sl-color-gray-6);
-  }
-  
-  .progress-sections :global(.objective-item:hover .objective-label),
-  .progress-sections :global(.objective-item:hover .objective-text) {
-    color: var(--sl-color-white);
-  }
-  
-  /* Dark mode hover for objectives - only within progress-sections */
-  :global([data-theme="dark"]) .progress-sections :global(.objective-item:hover) {
-    background-color: var(--sl-color-gray-5);
-  }
-
-  /* Add smooth scrollbars to scrollable sections */
-  .progress-sections :global(.objectives-summary-container #objectives-summary-list)::-webkit-scrollbar,
-  :global(#tasks-summary-list)::-webkit-scrollbar {
-    width: 4px;
-  }
-  
-  .progress-sections :global(.objectives-summary-container #objectives-summary-list)::-webkit-scrollbar-track,
-  :global(#tasks-summary-list)::-webkit-scrollbar-track {
-    background: transparent;
-  }
-  
-  .progress-sections :global(.objectives-summary-container #objectives-summary-list)::-webkit-scrollbar-thumb,
-  :global(#tasks-summary-list)::-webkit-scrollbar-thumb {
-    background: var(--sl-color-gray-4);
-    border-radius: 2px;
-  }
-  
-  .progress-sections :global(.objectives-summary-container #objectives-summary-list)::-webkit-scrollbar-thumb:hover,
-  :global(#tasks-summary-list)::-webkit-scrollbar-thumb:hover {
-    background: var(--sl-color-gray-3);
-  }
-
-  /* Preserve original Starlight TOC styling with global directives */
-  :global(starlight-toc) {
-    display: block;
-    flex: 1; /* Take remaining space after progress sections */
-    min-height: 0; /* Allow flex shrinking */
-  }
-
-  :global(starlight-toc nav) {
-    padding: 0;
-  }
-
-  :global(starlight-toc h2) {
-    color: var(--sl-color-white);
-    font-size: var(--sl-text-sm);
-    font-weight: 600;
-    margin-bottom: 0.5rem;
-    margin-top: 0;
-  }
-
-  :global(starlight-toc ul) {
-    border-inline-start: 1px solid var(--sl-color-hairline-light);
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    padding-inline-start: 1rem;
-  }
-
-  :global(starlight-toc > nav > ul) {
-    border-inline-start: none;
-    padding-inline-start: 0;
-  }
-
-  :global(starlight-toc li) {
-    margin: 0;
-    padding: 0;
-  }
-
-  :global(starlight-toc a) {
-    border-radius: 0.25rem;
-    color: var(--sl-color-gray-2);
-    display: block;
-    font-size: var(--sl-text-xs);
-    line-height: 1.25;
-    outline-offset: 2px;
-    padding: 0.125rem 0;
-    text-decoration: none;
-    overflow-wrap: anywhere;
-  }
-
-  :global(starlight-toc a:hover),
-  :global(starlight-toc a:focus) {
-    color: var(--sl-color-white);
-  }
-
-  :global(starlight-toc a[aria-current="true"]) {
-    color: var(--sl-color-text-accent);
-    font-weight: 600;
-  }
-
-  /* Dark mode TOC adjustments */
-  :global([data-theme="dark"] starlight-toc h2) {
-    color: var(--sl-color-white);
-  }
-
-  :global([data-theme="dark"] starlight-toc a) {
-    color: var(--sl-color-gray-2);
-  }
-
-  :global([data-theme="dark"] starlight-toc a:hover),
-  :global([data-theme="dark"] starlight-toc a:focus) {
-    color: var(--sl-color-white);
+  @layer starlight.core {
+    .right-sidebar-panel {
+      padding: 1rem var(--sl-sidebar-pad-x);
+    }
+    .sl-container {
+      width: calc(var(--sl-sidebar-width) - 2 * var(--sl-sidebar-pad-x));
+    }
+    .right-sidebar-panel :global(h2) {
+      color: var(--sl-color-white);
+      font-size: var(--sl-text-h5);
+      font-weight: 600;
+      line-height: var(--sl-line-height-headings);
+      margin-bottom: 0.5rem;
+    }
+    .right-sidebar-panel :global(:where(a)) {
+      display: block;
+      font-size: var(--sl-text-xs);
+      text-decoration: none;
+      color: var(--sl-color-gray-3);
+      overflow-wrap: anywhere;
+    }
+    .right-sidebar-panel :global(:where(a):hover) {
+      color: var(--sl-color-white);
+    }
+    @media (min-width: 72rem) {
+      .sl-container {
+        max-width: calc(
+          (
+            (
+                100vw - var(--sl-sidebar-width) - 2 * var(--sl-content-pad-x) - 2 *
+                  var(--sl-sidebar-pad-x)
+              ) * 0.25 /* MAGIC NUMBER 🥲 */
+          )
+        );
+      }
+    }
   }
 </style>
