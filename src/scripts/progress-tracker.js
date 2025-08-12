@@ -113,6 +113,9 @@ class ProgressTracker {
     // Populate objectives summary
     this.populateObjectivesSummary();
     
+    // Populate sidebar summaries
+    this.populateSidebarSummaries();
+    
     // Set up event listeners
     this.setupEventListeners();
   }
@@ -224,9 +227,44 @@ class ProgressTracker {
   }
 
   /**
-   * Set up event listeners for checkbox interactions
+   * Set up event listeners for checkbox interactions and navigation
    */
   setupEventListeners() {
+    // Navigation click handlers
+    document.addEventListener('click', (event) => {
+      // Handle sidebar objective navigation
+      if (event.target.closest('.progress-sections .objective-item')) {
+        event.preventDefault();
+        const objectiveItem = event.target.closest('.objective-item');
+        const targetId = objectiveItem.dataset.targetId;
+        if (targetId) {
+          this.smoothScrollToElement(targetId);
+        }
+      }
+      
+      // Handle sidebar task status clicks
+      else if (event.target.classList.contains('task-status')) {
+        event.preventDefault();
+        event.stopPropagation();
+        const statusElement = event.target;
+        const taskId = statusElement.dataset.taskId;
+        const isCompleted = statusElement.classList.contains('completed');
+        
+        // Toggle the task status
+        this.toggleTaskStatus(taskId, !isCompleted);
+      }
+      
+      // Handle sidebar task navigation (but not status clicks)
+      else if (event.target.closest('.task-link') && !event.target.classList.contains('task-status')) {
+        event.preventDefault();
+        const taskLink = event.target.closest('.task-link');
+        const targetId = taskLink.dataset.targetId;
+        if (targetId) {
+          this.smoothScrollToElement(targetId);
+        }
+      }
+    });
+
     document.addEventListener('change', (event) => {
       // Learning objective checkboxes
       if (event.target.classList.contains('learning-objective-checkbox')) {
@@ -247,6 +285,9 @@ class ProgressTracker {
           this.setItemState('answers', id, event.target.checked);
         }
         
+        // Update sidebar task status emoji
+        this.updateSidebarTaskStatus(id, event.target.checked);
+        
         console.log(`Task ${id} ${event.target.checked ? 'completed' : 'unchecked'}`);
       }
       
@@ -263,6 +304,9 @@ class ProgressTracker {
             pair.taskCheckbox.checked = event.target.checked;
             this.setItemState('tasks', taskId, event.target.checked);
           }
+          
+          // Update sidebar task status emoji
+          this.updateSidebarTaskStatus(taskId, event.target.checked);
           
           console.log(`Answer for task ${taskId} ${event.target.checked ? 'completed' : 'unchecked'}`);
         }
@@ -300,6 +344,132 @@ class ProgressTracker {
     }).join('');
     
     summaryContainer.innerHTML = objectivesHtml;
+  }
+
+  /**
+   * Populate the sidebar summaries for learning objectives and tasks
+   */
+  populateSidebarSummaries() {
+    this.populateSidebarObjectives();
+    this.populateSidebarTasks();
+  }
+
+  /**
+   * Populate the sidebar learning objectives summary with navigation
+   */
+  populateSidebarObjectives() {
+    const sidebarContainer = document.querySelector('.progress-sections #objectives-summary-list');
+    if (!sidebarContainer) return;
+    
+    const objectiveCheckboxes = document.querySelectorAll('.learning-objective-checkbox');
+    if (objectiveCheckboxes.length === 0) return;
+    
+    const objectivesHtml = Array.from(objectiveCheckboxes).map(checkbox => {
+      const label = document.querySelector(`label[for="${checkbox.id}"]`);
+      const statementDiv = label.querySelector('.learning-objective-statement');
+      const headerDiv = label.querySelector('.learning-objective-header strong');
+      
+      const statement = statementDiv.textContent.replace('I can ', '');
+      const number = headerDiv.textContent.replace('Learning Objective ', '').replace(':', '');
+      
+      return `
+        <div class="objective-item" data-target-id="${checkbox.id}">
+          <span class="objective-label">${number}</span>
+          <span class="objective-text">${statement}</span>
+        </div>
+      `;
+    }).join('');
+    
+    sidebarContainer.innerHTML = objectivesHtml;
+  }
+
+  /**
+   * Populate the sidebar tasks summary with navigation and checkboxes
+   */
+  populateSidebarTasks() {
+    const tasksContainer = document.getElementById('tasks-summary-list');
+    if (!tasksContainer) return;
+    
+    const taskCheckboxes = document.querySelectorAll('.task-checkbox');
+    if (taskCheckboxes.length === 0) {
+      tasksContainer.innerHTML = '<p class="no-tasks"><em>No tasks found on this page.</em></p>';
+      return;
+    }
+    
+    const tasksHtml = Array.from(taskCheckboxes).map(checkbox => {
+      const taskId = checkbox.id.replace('task-', '');
+      const taskElement = checkbox.closest('.starlight-aside--task');
+      const titleElement = taskElement.querySelector('.starlight-aside__title strong');
+      
+      const taskTitle = titleElement ? titleElement.textContent.trim() : `Task ${taskId}`;
+      const taskNumber = taskTitle.match(/Task (\d+\.\d+)/)?.[1] || taskId;
+      
+      // Get the task title without the "Task X.Y:" prefix for display
+      const displayTitle = taskTitle.replace(/^Task \d+\.\d+:\s*/, '');
+      
+      return `
+        <div class="task-item">
+          <a href="#task-${taskId}" class="task-link" data-target-id="task-${taskId}">
+            <span class="task-status ${checkbox.checked ? 'completed' : 'incomplete'}" data-task-id="${taskId}">
+              ${checkbox.checked ? '✓' : '⭕️'}
+            </span>
+            <span class="task-label">${taskNumber}</span>
+            <span class="task-title">${displayTitle}</span>
+          </a>
+        </div>
+      `;
+    }).join('');
+    
+    tasksContainer.innerHTML = tasksHtml;
+  }
+
+  /**
+   * Handle smooth scrolling navigation to elements
+   */
+  smoothScrollToElement(targetId) {
+    const element = document.getElementById(targetId);
+    if (element) {
+      element.scrollIntoView({ 
+        behavior: 'smooth', 
+        block: 'start',
+        inline: 'nearest'
+      });
+    }
+  }
+
+  /**
+   * Toggle task status from sidebar emoji click
+   */
+  toggleTaskStatus(taskId, completed) {
+    // Update the main task checkbox
+    const mainTaskCheckbox = document.getElementById(`task-${taskId}`);
+    if (mainTaskCheckbox) {
+      mainTaskCheckbox.checked = completed;
+      this.setItemState('tasks', taskId, completed);
+    }
+    
+    // Update corresponding answer checkbox
+    const pair = this.taskAnswerPairs.find(p => p.taskId === taskId);
+    if (pair && pair.answerCheckbox) {
+      pair.answerCheckbox.checked = completed;
+      this.setItemState('answers', taskId, completed);
+    }
+    
+    // Update sidebar emoji
+    this.updateSidebarTaskStatus(taskId, completed);
+    
+    console.log(`Sidebar task ${taskId} ${completed ? 'completed' : 'unchecked'}`);
+  }
+
+  /**
+   * Update sidebar task status emoji
+   */
+  updateSidebarTaskStatus(taskId, completed) {
+    const statusElement = document.querySelector(`[data-task-id="${taskId}"]`);
+    if (statusElement) {
+      statusElement.textContent = completed ? '✓' : '⭕️';
+      statusElement.className = `task-status ${completed ? 'completed' : 'incomplete'}`;
+    }
   }
 
   /**

@@ -13,6 +13,9 @@ export default defineConfig({
           			versions: [{ slug: '1.0' }],
         		}),
 			],
+			components: {
+				PageSidebar: './src/components/PageSidebar.astro',
+			},
 			title: 'MESA Academy',
 			logo: {
 				light: '/src/assets/my-logo.svg',

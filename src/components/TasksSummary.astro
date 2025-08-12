@@ -1,0 +1,107 @@
+---
+/**
+ * Tasks Summary component for sidebar display only.
+ * Automatically scans page content and displays all tasks with navigation.
+ */
+---
+
+<div class="tasks-summary-sidebar">
+  <h3 class="tasks-summary-title">Tasks</h3>
+  <div id="tasks-summary-list">
+    <!-- Tasks will be populated here by JavaScript -->
+  </div>
+</div>
+
+<style>
+  .tasks-summary-sidebar {
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--sl-color-hairline);
+    max-height: calc(33.33vh - 1rem); /* 1/3 of viewport height minus padding */
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .tasks-summary-title {
+    margin: 0 0 0.75rem 0;
+    font-size: var(--sl-text-sm);
+    font-weight: 600;
+    color: var(--sl-color-white);
+  }
+  
+  #tasks-summary-list {
+    margin: 0;
+    padding: 0;
+    overflow-y: auto;
+    flex: 1;
+  }
+  
+  /* Global styles for dynamically generated content */
+  :global(#tasks-summary-list .task-item) {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 0.25rem;
+    padding: 0.125rem 0;
+  }
+  
+  :global(#tasks-summary-list .task-item:last-child) {
+    margin-bottom: 0;
+  }
+  
+  :global(#tasks-summary-list .task-link) {
+    display: flex;
+    align-items: flex-start;
+    text-decoration: none;
+    color: var(--sl-color-gray-2);
+    width: 100%;
+    cursor: pointer;
+    border-radius: 0.25rem;
+    padding: 0.25rem;
+    margin: -0.25rem;
+    transition: background-color 0.2s ease, color 0.2s ease;
+  }
+  
+  :global(#tasks-summary-list .task-link:hover) {
+    background-color: var(--sl-color-gray-6);
+    color: var(--sl-color-white);
+  }
+  
+  /* Dark mode hover */
+  :global([data-theme="dark"] #tasks-summary-list .task-link:hover) {
+    background-color: var(--sl-color-gray-5);
+    color: var(--sl-color-white);
+  }
+  
+  :global(#tasks-summary-list .task-status) {
+    width: 1.2rem;
+    margin-right: 0.5rem;
+    margin-top: 0.05rem;
+    flex-shrink: 0;
+    font-size: 0.9rem;
+    cursor: pointer;
+    text-align: center;
+    display: inline-block;
+  }
+  
+  :global(#tasks-summary-list .task-status.completed) {
+    color: #22c55e; /* Green */
+  }
+  
+  :global(#tasks-summary-list .task-status.incomplete) {
+    color: #ef4444; /* Red */
+  }
+  
+  :global(#tasks-summary-list .task-label) {
+    font-weight: 600;
+    font-size: var(--sl-text-xs);
+    min-width: 2rem;
+    margin-right: 0.5rem;
+    flex-shrink: 0;
+  }
+  
+  :global(#tasks-summary-list .task-title) {
+    font-size: var(--sl-text-xs);
+    line-height: 1.25;
+    flex: 1;
+  }
+</style>
