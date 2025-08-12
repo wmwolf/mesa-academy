@@ -2,17 +2,18 @@
 import { defineConfig } from 'astro/config';
 import starlight from '@astrojs/starlight';
 import tailwindcss from '@tailwindcss/vite';
-import starlightVersions from 'starlight-versions'
+// import starlightVersions from 'starlight-versions' // Commented out for now, will re-enable when adding versions
 
 // https://astro.build/config
 export default defineConfig({
+	base: '/mesa-academy/',
 	integrations: [
 		starlight({
-			plugins: [
-        		starlightVersions({
-          			versions: [{ slug: '1.0' }],
-        		}),
-			],
+			// plugins: [
+        	//	starlightVersions({
+          	//		versions: [],
+        	//	}),
+			// ],
 			components: {
 				PageSidebar: './src/components/PageSidebar.astro',
 			},
