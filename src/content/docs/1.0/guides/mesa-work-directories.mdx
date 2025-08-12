@@ -1,0 +1,48 @@
+---
+title: MESA Work Directories
+description: "Working with MESA work directories: copying, compiling, and running MESA."
+draft: false
+guideNumber: "2"
+slug: 1.0/guides/mesa-work-directories
+---
+import { Aside, FileTree } from '@astrojs/starlight/components';
+import { Image } from 'astro:assets';
+import Task from '../../../../components/Task.astro';
+import Hint from '../../../../components/Hint.astro';
+import Answer from '../../../../components/Answer.astro';
+import SideBySideImages from '../../../../components/SideBySideImages.astro';
+export const guideNumber = frontmatter.guideNumber;
+import pgstar_hr from '../../../../assets/hr_000205.png';
+import pgstar_trho from '../../../../assets/trho_profile_000205.png';
+
+MESA is installed and set up, so now it's time to learn about the structure of MESA and MESA work directories.
+
+## Structure of `$MESA_DIR`
+Before we run a simulation, let's go through some basic structure of your MESA installation.
+
+<Task title="Navigate to and explore your MESA installation" number={1} guideNumber={guideNumber}>
+  Open a terminal and navigate to your MESA installation directory. This is the directory where you cloned the MESA repository. This task will also check to see if you <em>really</em> got your MESA installation set up correctly. Once in your directory, run the command `ls --color=auto` to list the contents of the directory.
+</Task>
+<Hint title="Use an environment variable.">
+  You can use the `MESA_DIR` environment variable to quickly navigate to your MESA installation directory.
+</Hint>
+<Answer>
+    If you set up your `MESA_DIR` envrionment variable correctly, you can use the following command to navigate to your MESA installation directory:
+    ```bash
+    cd $MESA_DIR
+    ls --color=auto
+    ```
+    <Aside type='caution'>
+  If you get an error that `$MESA_DIR` is not set, you need to set it up. Go back to the [prerequisites and setup guide](/docs/guides/prerequisites-and-setup) and ensure you've correctly installed MESA and set the appropriate environment variables, notably `MESA_DIR`, `MESASDK_ROOT`, and `OMP_NUM_THREADS`.
+</Aside>
+</Answer>
+
+<Aside type="tip">
+  The `--color=auto` option will colorize the output of `ls`, making it easier to distinguish between files and directories. I recommend aliasing `ls` to `ls --color=auto` in your shell configuration file (e.g., `.bashrc`, `.zshrc`) for convenience.
+</Aside>
+
+## Working with MESA work directories
+
+The key concept in MESA is the **work directory**. This is where you set up and run your stellar evolution simulations. MESA provides template work directories that you copy and customize for your specific research needs.
+
+This guide covers the essential concepts you need to understand MESA's structure and get started with your first simulation.
