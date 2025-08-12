@@ -48,7 +48,7 @@ export default defineConfig({
 				{
 					tag: 'script',
 					attrs: {
-						src: '/src/scripts/progress-tracker.js',
+						src: '/mesa-academy/src/scripts/progress-tracker.js',
 						type: 'module'
 					}
 				}
