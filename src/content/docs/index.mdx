@@ -1,46 +1,49 @@
 ---
-title: Welcome to Starlight
-description: Get started building your docs site with Starlight.
+title: Welcome to MESA Academy
+description: Learn computational astrophysics with MESA (Modules for Experiments in Stellar Astrophysics).
 template: splash
 hero:
   title: |
-    Welcome to Starlight with
+    Welcome to
     <span
       class="font-black text-transparent
         bg-clip-text bg-gradient-to-b
         from-accent-700 to-accent-400
         dark:from-accent-500 dark:to-accent-200"
     >
-      Tailwind
+      MESA Academy
     </span>
-  tagline: Congrats on setting up a new Starlight project!
+  tagline: Learn MESA (Modules for Experiments in Stellar Astrophysics) by using it.
+  subtitle: A comprehensive set of tutorials and guides to help you master MESA for stellar astrophysics research and education.
   image:
-    file: ../../assets/houston.webp
+    alt: MESA Academy logo
+    light: ../../assets/my-logo.svg
+    dark: ../../assets/my-logo-dark.svg
   actions:
-    - text: Prerequisites and Setup
-      link: /guides/prerequisites-and-setup/
+    - text: Get started with the basics
+      link: /mesa-academy/tutorials/00-about-these-tutorials/
       icon: right-arrow
-    - text: Read the Starlight docs
-      link: https://starlight.astro.build
-      icon: external
-      variant: minimal
+    # - text: Browse all guides
+    #   link: /guides/about-these-guides/
+    #   icon: open-book
+    #   variant: minimal
 ---
 
 import { Card, CardGrid } from '@astrojs/starlight/components';
 
-## Next steps
+## What you'll learn
 
 <CardGrid stagger>
-	<Card title="Update content" icon="pencil">
-		Edit `src/content/docs/index.mdx` to see this page change.
+	<Card title="Getting Started" icon="rocket">
+		Prerequisites, installation, and your first MESA runs.
 	</Card>
-	<Card title="Add new content" icon="add-document">
-		Add Markdown or MDX files to `src/content/docs` to create new pages.
+	<Card title="Beyond Inlists" icon="pencil">
+		Customize MESA to your research needs.
 	</Card>
-	<Card title="Configure your site" icon="setting">
-		Edit your `sidebar` and other config in `astro.config.mjs`.
+	<Card title="Best Practices" icon="setting">
+		Learn proven techniques for responsible and effective MESA usage.
 	</Card>
-	<Card title="Read the docs" icon="open-book">
-		Learn more in [the Starlight Docs](https://starlight.astro.build/).
+	<Card title="Additional Modules" icon="star">
+		Learn to use modules beyond MESA star, including MESA binary and MESA astero.
 	</Card>
 </CardGrid>

@@ -6,22 +6,31 @@ import { Icon } from '@astrojs/starlight/components';
  * 
  * @prop {string} statement - The "I can..." learning objective statement
  * @prop {number} number - The objective number (required)
- * @prop {string} [guideNumber] - Guide number to use for the objective
+ * @prop {string} [tutorialNumber] - Tutorial number to use for the objective
  */
 interface Props {
   statement: string;
   number: number;
-  guideNumber?: string;
+  tutorialNumber?: string;
 }
 
-const { statement, number, guideNumber } = Astro.props;
+const { statement, number, tutorialNumber } = Astro.props;
 
-// Format the objective ID based on whether we have a guideNumber
+// Process backticks in statement and convert to <code> elements
+function processBackticks(text: string): string {
+  return text.replace(/`([^`]+)`/g, '<code>$1</code>');
+}
+
+// Ensure statement ends with a period
+const rawStatement = statement.trim().endsWith('.') ? statement.trim() : statement.trim() + '.';
+const formattedStatement = processBackticks(rawStatement);
+
+// Format the objective ID based on whether we have a tutorialNumber
 let objectiveId = `learning-objective-${number}`;
 let objectiveLabel = `Learning Objective ${number}`;
-if (guideNumber) {
-  objectiveId = `learning-objective-${guideNumber}-${number}`;
-  objectiveLabel = `Learning Objective ${guideNumber}.${number}`;
+if (tutorialNumber) {
+  objectiveId = `learning-objective-${tutorialNumber}-${number}`;
+  objectiveLabel = `Learning Objective ${tutorialNumber}.${number}`;
 }
 ---
 
@@ -40,7 +49,7 @@ if (guideNumber) {
           <strong>{objectiveLabel}:</strong>
         </div>
         <div class="learning-objective-statement">
-          I <span class="can-text">can</span> {statement}
+          I <span class="can-text">can</span> <span set:html={formattedStatement}></span>
         </div>
       </label>
     </div>
@@ -93,6 +102,15 @@ if (guideNumber) {
   .learning-objective-statement {
     font-style: italic;
     margin-left: 1.5rem;
+  }
+  
+  .learning-objective-statement code {
+    font-family: var(--sl-font-mono);
+    font-size: 0.9em;
+    background-color: var(--sl-color-gray-6);
+    border-radius: 0.25rem;
+    padding: 0.125rem 0.25rem;
+    font-style: normal;
   }
   
   .learning-objective-statement .can-text {

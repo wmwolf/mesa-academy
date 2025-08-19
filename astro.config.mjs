@@ -15,32 +15,27 @@ export default defineConfig({
         	//	}),
 			// ],
 			components: {
+				Sidebar: './src/components/Sidebar.astro',
 				PageSidebar: './src/components/PageSidebar.astro',
 			},
 			title: 'MESA Academy',
 			logo: {
-				light: '/src/assets/my-logo.svg',
-				dark: '/src/assets/my-logo-dark.svg',
+				light: '/src/assets/small-logo.svg',
+				dark: '/src/assets/small-logo-dark.svg',
 				replacesTitle: true
 			},
 			social: [{ icon: 'github', label: 'GitHub', href: 'https://github.com/wmwolf/mesa-academy' }],
 			sidebar: [
 				{
-					label: 'Guides',
+					label: 'Getting Started',
+					collapsed: true,
 					items: [
 						// Each item here is one entry in the navigation menu.
-						{ label: 'About These Guides', slug: 'guides/about-these-guides' },
-						{ label: 'Prerequisites and Setup', slug: 'guides/prerequisites-and-setup' },
-						{ label: 'MESA Work Directories', slug: 'guides/mesa-work-directories' },
+						{ label: 'About These Tutorials', slug: 'tutorials/00-about-these-tutorials' },
+						{ label: 'Prerequisites and Setup', slug: 'tutorials/01-prerequisites-and-setup' },
+						{ label: 'MESA Work Directories', slug: 'tutorials/02-mesa-work-directories' },
+						{ label: 'Inlists and Outputs', slug: 'tutorials/03-inlists-and-outputs' },
 					],
-				},
-				{
-					label: 'Reference',
-					autogenerate: { directory: 'reference' },
-				},
-				{
-					label: 'Examples',
-					autogenerate: { directory: 'examples' },
 				},
 			],
 			customCss: ['./src/styles/global.css'],

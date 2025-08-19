@@ -1,0 +1,92 @@
+---
+// Import the original Starlight sidebar component and extend it
+import OriginalSidebar from '@astrojs/starlight/components/Sidebar.astro';
+import TableOfContents from 'virtual:starlight/components/TableOfContents';
+
+const { toc } = Astro.locals.starlightRoute;
+---
+
+<!-- Original Starlight sidebar content -->
+<OriginalSidebar />
+
+<!-- Add ToC below navigation if it exists -->
+{toc && (
+	<div class="toc-section">
+		<div class="toc-separator"></div>
+		<TableOfContents />
+	</div>
+)}
+
+<style>
+	.toc-section {
+		margin-top: 1.5rem;
+	}
+	
+	.toc-separator {
+		border-top: 1px solid var(--sl-color-hairline);
+		margin-bottom: 1rem;
+	}
+	
+	/* Style the ToC to match left sidebar appearance */
+	.toc-section :global(starlight-toc h2) {
+		color: var(--sl-color-white);
+		font-size: var(--sl-text-sm);
+		font-weight: 600;
+		margin-bottom: 0.5rem;
+		margin-top: 0;
+	}
+	
+	.toc-section :global(starlight-toc ul) {
+		border-inline-start: 1px solid var(--sl-color-hairline-light);
+		list-style: none;
+		margin: 0;
+		padding: 0;
+		padding-inline-start: 1rem;
+	}
+	
+	.toc-section :global(starlight-toc > nav > ul) {
+		border-inline-start: none;
+		padding-inline-start: 0;
+	}
+	
+	.toc-section :global(starlight-toc li) {
+		margin: 0;
+		padding: 0;
+	}
+	
+	.toc-section :global(starlight-toc a) {
+		border-radius: 0.25rem;
+		color: var(--sl-color-gray-2);
+		display: block;
+		font-size: var(--sl-text-xs);
+		line-height: 1.25;
+		outline-offset: 2px;
+		padding: 0.125rem 0;
+		text-decoration: none;
+		overflow-wrap: anywhere;
+	}
+	
+	.toc-section :global(starlight-toc a:hover),
+	.toc-section :global(starlight-toc a:focus) {
+		color: var(--sl-color-white);
+	}
+	
+	.toc-section :global(starlight-toc a[aria-current="true"]) {
+		color: var(--sl-color-text-accent);
+		font-weight: 600;
+	}
+	
+	/* Dark mode adjustments */
+	:global([data-theme="dark"]) .toc-section :global(starlight-toc h2) {
+		color: var(--sl-color-white);
+	}
+	
+	:global([data-theme="dark"]) .toc-section :global(starlight-toc a) {
+		color: var(--sl-color-gray-2);
+	}
+	
+	:global([data-theme="dark"]) .toc-section :global(starlight-toc a:hover),
+	:global([data-theme="dark"]) .toc-section :global(starlight-toc a:focus) {
+		color: var(--sl-color-white);
+	}
+</style>

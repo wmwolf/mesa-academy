@@ -1,7 +1,7 @@
 ---
 title: About These Tutorials
 description: An introduction to your author, the purpose of these tutorials, and some of the conventions used in these tutorials.
-guideNumber: "0"
+tutorialNumber: "0"
 ---
 
 import Task from '../../../components/Task.astro';
@@ -11,11 +11,9 @@ import LearningObjective from '../../../components/LearningObjective.astro';
 import LearningObjectivesSummary from '../../../components/LearningObjectivesSummary.astro';
 import { Aside } from '@astrojs/starlight/components';
 
-export const guideNumber = frontmatter.guideNumber;
+export const tutorialNumber = frontmatter.tutorialNumber;
 
 On this page, you'll find an introduction to your author, a bit about the purpose of these tutorials, and some of the conventions used in these tutorials.
-
-<LearningObjectivesSummary />
 
 ## About the Author
 
@@ -25,26 +23,12 @@ I've also been involved with most of the [MESA schools](https://mesastar.org/sum
 
 ## About These Tutorials
 
-A driving philosophy between these guies is that you should learn MESA by using it, not just by reading about it. Of course, you *do* need to read a bit about it, but I aim to keep you working on things constantly as you go. As such, each of the main tutorials is interspersed with **Tasks** that you should complete before moving on. Don't skip these! That's where the real learning happens.
+A driving philosophy between these tutorials is that you should learn MESA by using it, not just by reading about it. Of course, you *do* need to read a bit about it, but I aim to keep you working on things constantly as you go. As such, each of the main tutorials is interspersed with **Tasks** that you should complete before moving on. Don't skip these! That's where the real learning happens.
 
-<LearningObjective statement="understand the hands-on learning philosophy of MESA Academy" number={1} guideNumber={guideNumber} />
+The first example of a task is just below. Do it, and then mark it complete uskng the checkbox in the upper left. A summary of all tasks in a tutorial is present in the lower right sidebar (if your browser window is wide enough to show the right sidebar). Note that you can mark tasks complete by clicking on the checkbox next to a task in the sidebar. You can also click on a task name to scroll immediately to that task in the main content area.
 
-## Acknowledgements
-
-These tutorials were written with support from the National Science Foundation under grant AST-2238851. Any opinions, findings, conclusions, or recommendations expressed in these materials are those of the author and do not necessarily reflect the views of the National Science Foundation.
-
-Additionally, I adapted and updated many exercises in these tutorials from exercises in various [MESA Schools](https://mesastar.org/summer-schools/). When this is the case, I'll cite the original source exercise.
-
-## Conventions and Organization
-
-The tutorials are best viewed on a computer web browser, though they should also work on a tablet or phone. In the upper left, you'll see a navigation menu that let's you jump between the different tutorials and resources. In the upper right, you'll see a table of contents that lets you jump to different sections of the current tutorial. You can also use the search bar in the upper right to search for specific topics.
-
-In the main body of the tutorials, you'll see a lot of different types of content:
-
-### Tasks
-
-<Task title="Read this Task" number={1} guideNumber={guideNumber}>
-  This is an example of a task that you'll see throughout these tutorials. The title will give you a short command, and then the text in this box will give you more contex or steps.
+<Task title="Read this Task" number={1} tutorialNumber={tutorialNumber}>
+  This is an example of a task that you'll see throughout these tutorials. The title will give you a short command, and then the text in this box will give you more context or steps.
   
   Tasks might include:
   - Editing files
@@ -55,7 +39,17 @@ In the main body of the tutorials, you'll see a lot of different types of conten
   Always complete these tasks before moving on to ensure you're getting the most out of these tutorials!
 </Task>
 
-<LearningObjective statement="identify and use Tasks, Hints, Answers, and Asides in the tutorials" number={2} guideNumber={guideNumber} />
+In addition to Tasks, which are things you'll <em>do</em>, I've also laid out clear <strong>Learning Objectives</strong> in each tutorial. These are usually statements that start with "I can..." and describe <em>abilities</em> that you should have at various points throughout each tutorial. If you stumble across a learning objective that you don't think you have achieved yet, take a moment to go back and review the material or complete any unfinished tasks. When you feel you have achieved a learning objective, check it off in the associated box (first example just below). You should see the objective box turn green as well as the reminder in the summary at the top of the right side bar (if your browser window is wide enough to show the right sidebar).
+
+<LearningObjective statement="understand the hands-on learning philosophy of MESA Academy" number={1} tutorialNumber={tutorialNumber} />
+
+## Conventions and Organization
+
+The tutorials are best viewed on a computer web browser, though they should also work on a tablet or phone. On a larger screen, you'll see a navigation menu in the upper left that lets you jump between the different tutorials and resources. In the lower left, you'll see a table of contents that lets you jump to different sections of the current tutorial. You can also use the search bar in the upper right to search for specific topics.
+
+As mentioned above, a summary of learning objectives should be present in the upper right sidebar, and a summary of tasks in the lower right. These will only be visible if your browser window is wide enough.
+
+In the main body (middle pane) of the tutorials, you'll see a lot of different types of content in addition to the tasks and learning objectives. Here's a brief overview of what you can expect:
 
 ### Hints
 <Hint title="Click me for a hint.">
@@ -65,6 +59,8 @@ In the main body of the tutorials, you'll see a lot of different types of conten
 ### Answers
 <Answer title="Click me for the answer.">
   If you really get stuck, or just want to check your work, you can click on an answer like this one to see the solution. However, I recommend trying to solve the task yourself first!
+
+  Since an answer always is associated with a task, each answer also provides a checkbox at the bottom to mark the associated task as complete. It doesn't matter if you use this checkbox, the one on the task, or the one in the sidebar; they all do the same thing.
 </Answer>
 
 ### Asides
@@ -94,7 +90,7 @@ def hello_world():
     print("Hello, world!")
 ```
 
-Note that code blocks always have a handy copy button in the upper right corner. If code belongs in a particular file, I'll indicate that in the code block header. For example, if this code belongs in a file called `hello.py`, it will look like this:
+Note that code blocks always have a handy copy button in the upper right corner that becomes visible when your mouse enters the code block. If code belongs in a particular file, I'll indicate that in the code block header. For example, if this code belongs in a file called `hello.py`, it will look like this:
 
 ```python
 # hello.py
@@ -139,4 +135,10 @@ Finally, I may highlight lines that should be removed or added to a file, like t
 
 In this example, the line `stop_near_zams = .true.` should be removed, and the two lines starting with `xa_central_lower_limit_species(1)` and `xa_central_lower_limit(1)` should be added.
 
-<LearningObjective statement="navigate the tutorial interface and understand code block conventions" number={3} guideNumber={guideNumber} />
+<LearningObjective statement="identify and use Hints, Answers, Asides, and Code Blocks in the tutorials" number={2} tutorialNumber={tutorialNumber} />
+
+## Acknowledgements
+
+These tutorials were written with support from the National Science Foundation under grant AST-2238851. Any opinions, findings, conclusions, or recommendations expressed in these materials are those of the author and do not necessarily reflect the views of the National Science Foundation.
+
+Additionally, I adapted and updated many exercises in these tutorials from exercises in various [MESA Schools](https://mesastar.org/summer-schools/). When this is the case, I'll cite the original source exercise.

@@ -6,23 +6,23 @@ import { Icon } from '@astrojs/starlight/components';
  * 
  * @prop {string} title - The title of the task
  * @prop {number} number - The task number (required)
- * @prop {string} [guideNumber] - Guide number to use for the task
+ * @prop {string} [tutorialNumber] - Tutorial number to use for the task
  */
 interface Props {
   title: string;
   number: number;
-  guideNumber?: string;
+  tutorialNumber?: string;
 }
 
 // Get props with explicit numbering
-const { title, number, guideNumber } = Astro.props;
+const { title, number, tutorialNumber } = Astro.props;
 
-// Format the task label based on whether we have a guideNumber
+// Format the task label based on whether we have a tutorialNumber
 let taskLabel = `Task ${number}`;
 let taskId = `task-${number}`;
-if (guideNumber) {
-  taskLabel = `Task ${guideNumber}.${number}`;
-  taskId = `task-${guideNumber}-${number}`;
+if (tutorialNumber) {
+  taskLabel = `Task ${tutorialNumber}.${number}`;
+  taskId = `task-${tutorialNumber}-${number}`;
 }
 ---
 

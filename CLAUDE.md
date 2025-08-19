@@ -188,11 +188,31 @@ src/
 - **Starlight Component Override**: Successfully overrode PageSidebar while preserving TOC functionality
 - **Responsive Height Management**: Flexbox-based height distribution with individual section scrolling
 
-**Next Session TODO:**
-1. Fix right sidebar positioning to be flush against viewport
-2. Adjust height distribution to 1/3, 1/3, 1/3+ for objectives, tasks, TOC
-3. Fix sidebar scrolling so only individual components scroll, not entire sidebar
-4. Test and refine the complete Phase 3 implementation
+### Phase 4: Sidebar Reorganization (Session 2025-08-12)
+**Goal**: Move "On This Page" ToC to left sidebar, simplify right sidebar to objectives + tasks only
+
+**Tasks**:
+1. Override `Sidebar` component to add ToC below existing navigation
+   - Keep cross-page navigation at top (Guides, Reference, Examples)
+   - Add visual separator between navigation and ToC
+   - Maintain mobile responsive behavior
+2. Simplify `PageSidebar.astro` to remove ToC
+   - Show only Learning Objectives and Tasks
+   - Redistribute height 50/50 between objectives and tasks
+   - Fix positioning and scrolling issues from Phase 3
+3. Update component configuration in `astro.config.mjs`
+
+**Benefits**:
+- ✅ Logical separation: navigation/structure (left) vs progress tracking (right)
+- ✅ Solves right sidebar height distribution issues (50/50 vs cramped 1/6, 1/3, 1/2+)
+- ✅ Fixes positioning and scrolling conflicts
+- ✅ More breathing room for objectives and tasks
+
+**Current Session TODO:**
+1. Create new Sidebar.astro component override
+2. Add TableOfContents to left sidebar below navigation  
+3. Simplify PageSidebar.astro to only show objectives and tasks
+4. Test and refine the new layout
 
 ### Future Enhancements (Phase 4+)
 - **Dynamic Summary Colors**: Make the LearningObjectivesSummary component change from orange (incomplete) to green (complete) based on completion status of all objectives on the page. This requires:

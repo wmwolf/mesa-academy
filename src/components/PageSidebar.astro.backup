@@ -1,0 +1,145 @@
+---
+import MobileTableOfContents from 'virtual:starlight/components/MobileTableOfContents';
+import LearningObjectivesSummary from './LearningObjectivesSummary.astro';
+import TasksSummary from './TasksSummary.astro';
+
+const { toc } = Astro.locals.starlightRoute;
+---
+
+{toc && (
+  <>
+    <!-- Mobile TOC (maintain existing behavior) -->
+    <div class="lg:sl-hidden">
+      <MobileTableOfContents />
+    </div>
+    
+    <!-- Desktop Progress Sidebar - Only objectives and tasks -->
+    <div class="right-sidebar-panel sl-hidden lg:sl-block">
+      <div class="sl-container">
+        <LearningObjectivesSummary />
+        <TasksSummary />
+      </div>
+    </div>
+  </>
+)}
+
+<style>
+  /* Work with Starlight's existing responsive layout instead of fighting it */
+  :global(.right-sidebar-panel) {
+    /* Remove all positioning - let Starlight handle it */
+    background-color: var(--sl-color-bg-sidebar);
+    border-inline-start: 1px solid var(--sl-color-hairline-shade);
+    padding: 1rem var(--sl-sidebar-pad-x);
+    overflow-x: hidden; /* Prevent horizontal overflow */
+    word-wrap: break-word; /* Force long words to break */
+  }
+
+  :global(.right-sidebar-panel .sl-container) {
+    padding: 0;
+    max-width: none;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    overflow-x: hidden; /* Prevent horizontal overflow */
+    width: 100%; /* Ensure container respects parent width */
+  }
+
+  /* Objectives section styling - max 50% height, can be smaller */
+  :global(.objectives-summary-container) {
+    margin: 0 0 1.5rem 0;
+    padding: 0 0 1rem 0;
+    border-bottom: 1px solid var(--sl-color-hairline);
+    border-radius: 0;
+    background-color: transparent;
+    border-left: none;
+    border-right: none;
+    border-top: none;
+    max-height: 50vh; /* Max 50% of viewport height */
+    display: flex;
+    flex-direction: column;
+    flex-shrink: 0; /* Don't shrink smaller than content needs */
+    overflow-x: hidden; /* Prevent horizontal overflow */
+    width: 100%; /* Explicit width constraint */
+  }
+  
+  :global(.objectives-summary-container #objectives-summary-list) {
+    overflow-y: auto;
+    overflow-x: hidden; /* Prevent horizontal overflow */
+    flex: 1;
+    width: 100%; /* Explicit width constraint */
+  }
+  
+  :global(.objectives-summary-title) {
+    font-size: var(--sl-text-sm);
+    font-weight: 600;
+    color: var(--sl-color-white);
+    margin-bottom: 0.75rem;
+  }
+  
+  :global(.objectives-summary-intro) {
+    font-size: var(--sl-text-xs);
+    color: var(--sl-color-gray-2);
+    margin-bottom: 0.75rem;
+  }
+  
+  /* Make objective items clickable in sidebar */
+  :global(.objective-item) {
+    cursor: pointer;
+    border-radius: 0.25rem;
+    padding: 0.25rem;
+    margin: -0.25rem -0.25rem 0.25rem -0.25rem;
+    transition: background-color 0.2s ease, color 0.2s ease;
+  }
+  
+  :global(.objective-label),
+  :global(.objective-text) {
+    color: var(--sl-color-gray-2);
+    font-size: var(--sl-text-xs);
+  }
+  
+  :global(.objective-item:hover) {
+    background-color: var(--sl-color-gray-6);
+  }
+  
+  :global(.objective-item:hover .objective-label),
+  :global(.objective-item:hover .objective-text) {
+    color: var(--sl-color-white);
+  }
+  
+  /* Dark mode hover for objectives */
+  :global([data-theme="dark"]) :global(.objective-item:hover) {
+    background-color: var(--sl-color-gray-5);
+  }
+  
+  /* Tasks section styling - flexible height, takes remaining space */
+  :global(.tasks-summary-container) {
+    flex: 1; /* Take remaining space after objectives */
+    min-height: 0; /* Allow shrinking */
+    display: flex;
+    flex-direction: column;
+    overflow-x: hidden; /* Prevent horizontal overflow */
+    width: 100%; /* Explicit width constraint */
+  }
+
+  /* Add smooth scrollbars to scrollable sections */
+  :global(.objectives-summary-container #objectives-summary-list)::-webkit-scrollbar,
+  :global(#tasks-summary-list)::-webkit-scrollbar {
+    width: 4px;
+  }
+  
+  :global(.objectives-summary-container #objectives-summary-list)::-webkit-scrollbar-track,
+  :global(#tasks-summary-list)::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  
+  :global(.objectives-summary-container #objectives-summary-list)::-webkit-scrollbar-thumb,
+  :global(#tasks-summary-list)::-webkit-scrollbar-thumb {
+    background: var(--sl-color-gray-4);
+    border-radius: 2px;
+  }
+  
+  :global(.objectives-summary-container #objectives-summary-list)::-webkit-scrollbar-thumb:hover,
+  :global(#tasks-summary-list)::-webkit-scrollbar-thumb:hover {
+    background: var(--sl-color-gray-3);
+  }
+</style>

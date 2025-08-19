@@ -319,6 +319,14 @@ class ProgressTracker {
   }
 
   /**
+   * Ensure a statement ends with a period
+   */
+  ensureStatementEndsWithPeriod(statement) {
+    const trimmed = statement.trim();
+    return trimmed.endsWith('.') ? trimmed : trimmed + '.';
+  }
+
+  /**
    * Populate the objectives summary at the top of the page
    */
   populateObjectivesSummary() {
@@ -336,7 +344,7 @@ class ProgressTracker {
       const statementDiv = label.querySelector('.learning-objective-statement');
       const headerDiv = label.querySelector('.learning-objective-header strong');
       
-      const statement = statementDiv.textContent.replace('I can ', '');
+      const statement = this.ensureStatementEndsWithPeriod(statementDiv.textContent.replace('I can ', ''));
       const number = headerDiv.textContent.replace('Learning Objective ', '').replace(':', '');
       
       return `
@@ -373,7 +381,7 @@ class ProgressTracker {
       const statementDiv = label.querySelector('.learning-objective-statement');
       const headerDiv = label.querySelector('.learning-objective-header strong');
       
-      const statement = statementDiv.textContent.replace('I can ', '');
+      const statement = this.ensureStatementEndsWithPeriod(statementDiv.textContent.replace('I can ', ''));
       const number = headerDiv.textContent.replace('Learning Objective ', '').replace(':', '');
       
       return `
