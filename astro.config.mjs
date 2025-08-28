@@ -46,6 +46,22 @@ export default defineConfig({
 						src: '/mesa-academy/progress-tracker.js',
 						type: 'module'
 					}
+				},
+				{
+					tag: 'script',
+					attrs: {
+						'data-goatcounter': 'https://wmwolf.goatcounter.com/count',
+						async: true,
+						src: '//gc.zgo.at/count.js'
+					},
+					content: `
+						// Only load GoatCounter in production
+						if (window.location.hostname === 'localhost' || 
+						    window.location.hostname === '127.0.0.1' || 
+						    window.location.hostname.endsWith('.local')) {
+							document.currentScript.remove();
+						}
+					`
 				}
 			],
 		}),
