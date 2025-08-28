@@ -50,7 +50,7 @@ export default defineConfig({
 				{
 					tag: 'script',
 					attrs: {
-						'data-goatcounter': 'https://wmwolf.goatcounter.com/count',
+						'data-goatcounter': 'https://mesa-academy.goatcounter.com/count',
 						async: true,
 						src: '//gc.zgo.at/count.js'
 					},
