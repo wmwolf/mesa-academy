@@ -75,6 +75,12 @@ const { toc } = Astro.locals.starlightRoute;
 		color: var(--sl-color-text-accent);
 		font-weight: 600;
 	}
+
+	/* Make active ToC item more visible in dark mode */
+	:global([data-theme="dark"]) .toc-section :global(starlight-toc a[aria-current="true"]) {
+		color: var(--color-accent-200);
+		font-weight: 700;
+	}
 	
 	/* Dark mode adjustments */
 	:global([data-theme="dark"]) .toc-section :global(starlight-toc h2) {
@@ -90,3 +96,30 @@ const { toc } = Astro.locals.starlightRoute;
 		color: var(--sl-color-white);
 	}
 </style>
+
+<script>
+	// Auto-expand sidebar section containing current page, collapse others
+	document.addEventListener('DOMContentLoaded', () => {
+		const sidebar = document.querySelector('nav[aria-label="Main"]');
+		if (!sidebar) return;
+
+		// Find the currently active link
+		const activeLink = sidebar.querySelector('a[aria-current="page"]');
+		if (!activeLink) return;
+
+		// Find all collapsible groups (details elements)
+		const allGroups = sidebar.querySelectorAll('details');
+
+		// Find which group contains the active link
+		const activeGroup = activeLink.closest('details');
+
+		// Collapse all groups, then expand only the one with active link
+		allGroups.forEach(group => {
+			if (group === activeGroup) {
+				group.setAttribute('open', '');
+			} else {
+				group.removeAttribute('open');
+			}
+		});
+	});
+</script>

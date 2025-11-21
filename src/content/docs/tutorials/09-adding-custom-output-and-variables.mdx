@@ -1,0 +1,27 @@
+---
+title: Adding Custom Output and Variables
+description: "Creating custom history and profile columns and managing module-level variables."
+draft: true
+tutorialNumber: "9"
+---
+
+import Task from '../../../components/Task.astro';
+import Hint from '../../../components/Hint.astro';
+import Answer from '../../../components/Answer.astro';
+import LearningObjective from '../../../components/LearningObjective.astro';
+import LearningObjectivesSummary from '../../../components/LearningObjectivesSummary.astro';
+import { Aside } from '@astrojs/starlight/components';
+
+export const tutorialNumber = frontmatter.tutorialNumber;
+
+<LearningObjectivesSummary />
+
+<LearningObjective statement="define a module-level variable in `run_star_extras.f90`" number={1} tutorialNumber={tutorialNumber} />
+
+<LearningObjective statement="ensure that a variable is stored and loaded with photos" number={2} tutorialNumber={tutorialNumber} />
+
+<LearningObjective statement="add a custom column to the history output" number={3} tutorialNumber={tutorialNumber} />
+
+<LearningObjective statement="add a custom column to the profile output" number={4} tutorialNumber={tutorialNumber} />
+
+This tutorial is under construction.

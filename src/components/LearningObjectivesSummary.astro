@@ -49,6 +49,19 @@
     margin-bottom: 0.75rem;
     cursor: pointer;
     transition: color 0.2s ease;
+    border-radius: 0.25rem;
+    padding: 0.25rem;
+    margin-left: -0.25rem;
+    margin-right: -0.25rem;
+  }
+
+  :global(#objectives-summary-list .objective-item:hover) {
+    background-color: var(--sl-color-gray-6);
+  }
+
+  /* Dark mode hover */
+  :global([data-theme="dark"] #objectives-summary-list .objective-item:hover) {
+    background-color: var(--sl-color-gray-5);
   }
   
   :global(#objectives-summary-list .objective-item:last-child) {

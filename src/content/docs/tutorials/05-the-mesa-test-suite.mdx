@@ -1,0 +1,27 @@
+---
+title: The MESA Test Suite
+description: "Using MESA's test suite infrastructure and starting projects from test cases."
+draft: true
+tutorialNumber: "5"
+---
+
+import Task from '../../../components/Task.astro';
+import Hint from '../../../components/Hint.astro';
+import Answer from '../../../components/Answer.astro';
+import LearningObjective from '../../../components/LearningObjective.astro';
+import LearningObjectivesSummary from '../../../components/LearningObjectivesSummary.astro';
+import { Aside } from '@astrojs/starlight/components';
+
+export const tutorialNumber = frontmatter.tutorialNumber;
+
+<LearningObjectivesSummary />
+
+<LearningObjective statement="describe the MESA testing infrastructure and its purpose" number={1} tutorialNumber={tutorialNumber} />
+
+<LearningObjective statement="start a new project from a test case" number={2} tutorialNumber={tutorialNumber} />
+
+<LearningObjective statement="use multiple inlists in parallel for cascading controls or in series for multi-step simulations" number={3} tutorialNumber={tutorialNumber} />
+
+<LearningObjective statement="identify and adjust controls in a test suite case to make it suitable for a new project" number={4} tutorialNumber={tutorialNumber} />
+
+This tutorial is under construction.

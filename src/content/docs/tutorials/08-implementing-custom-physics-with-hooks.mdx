@@ -1,0 +1,27 @@
+---
+title: Implementing Custom Physics with Hooks
+description: "Using MESA hooks to implement custom physics in your simulations."
+draft: true
+tutorialNumber: "8"
+---
+
+import Task from '../../../components/Task.astro';
+import Hint from '../../../components/Hint.astro';
+import Answer from '../../../components/Answer.astro';
+import LearningObjective from '../../../components/LearningObjective.astro';
+import LearningObjectivesSummary from '../../../components/LearningObjectivesSummary.astro';
+import { Aside } from '@astrojs/starlight/components';
+
+export const tutorialNumber = frontmatter.tutorialNumber;
+
+<LearningObjectivesSummary />
+
+<LearningObjective statement="locate available hook templates" number={1} tutorialNumber={tutorialNumber} />
+
+<LearningObjective statement="set up a null hook and confirm it is being called" number={2} tutorialNumber={tutorialNumber} />
+
+<LearningObjective statement="implement the `other_energy` hook for a toy model" number={3} tutorialNumber={tutorialNumber} />
+
+<LearningObjective statement="find where a hook is called in the MESA source code" number={4} tutorialNumber={tutorialNumber} />
+
+This tutorial is under construction.

@@ -145,7 +145,7 @@ src/
 - Mobile responsiveness testing
 - Accessibility compliance (keyboard navigation, screen readers)
 
-### Current Status (Session End 2025-08-04)
+### Current Status (Session End 2025-11-21)
 
 **✅ Phase 1 FULLY COMPLETED:**
 - ✅ LearningObjective.astro component with orange→green color transitions and green checkboxes
@@ -164,59 +164,46 @@ src/
 - ✅ Dynamic task titles in answer checkbox text ("Completed Task X.Y: Title")
 - ✅ localStorage persistence for both tasks and answers with version isolation
 
-**✅ Phase 3 MOSTLY COMPLETED (Session 2025-08-04):**
+**✅ Phase 3 FULLY COMPLETED:**
 - ✅ PageSidebar.astro override component created
-- ✅ TasksSummary.astro component with emoji status indicators (✓ green, ⭕️ red)
-- ✅ Navigation functionality (click to scroll to tasks/objectives)
+- ✅ TasksSummary.astro component with emoji status indicators (✓ green, ☐ gray)
+- ✅ Navigation functionality (click to scroll to tasks and objectives)
 - ✅ Sidebar styling to match left sidebar appearance
-- ✅ Height distribution system implemented (1/6 objectives, 1/3 tasks, 1/2+ TOC)
-- ✅ Individual section scrolling with custom scrollbars
+- ✅ Individual section scrolling with hover-based scrollbar visibility
 - ✅ Progress tracking integration with existing localStorage system
 
-**❌ Phase 3 Outstanding Issues:**
-1. **Right sidebar positioning**: Not flush against right viewport edge despite `right: 0` and `position: sticky`
-2. **Height distribution needs adjustment**: Should be 1/3, 1/3, 1/3+ instead of current 1/6, 1/3, 1/2+
-3. **Sidebar scrolling bug**: Entire sidebar can scroll (shows blank space below) instead of only individual components scrolling
+**✅ Phase 4 FULLY COMPLETED:**
+- ✅ Sidebar.astro component override with ToC below navigation
+- ✅ Visual separator between navigation and ToC
+- ✅ PageSidebar simplified to only show Learning Objectives and Tasks
+- ✅ Both component overrides registered in astro.config.mjs
+- ✅ Enhanced dark mode ToC highlighting (brighter accent color + bolder weight)
+
+**✅ Additional Polish (Session 2025-11-21):**
+- ✅ Main content centering on wide screens (`margin-inline: auto` for main `.sl-container`)
+- ✅ Tasks scrollbar only appears on hover when needed
+- ✅ Learning objectives in sidebar now clickable with scroll-to navigation
+- ✅ Hover highlighting for clickable objective items
+- ✅ Dark mode ToC active item uses brighter accent color (--color-accent-200)
+- ✅ Sidebar auto-expand: section containing current page auto-expands, others collapse
+- ✅ Restructured tutorials into Section I (Getting Started, 00-05) and Section II (Going Deeper, 06-09)
+- ✅ Created blank tutorial files 04-09 with learning objectives
 
 **Key Technical Solutions Implemented:**
 - **CSS Specificity**: Used `:global()` directive to prevent Astro CSS tree-shaking of dynamic content
-- **High Specificity Selectors**: ID-based selectors (`#objectives-summary-list`) for reliable overrides  
+- **High Specificity Selectors**: ID-based selectors (`#objectives-summary-list`, `#tasks-summary-list`) for reliable overrides
 - **Version Isolation**: localStorage structured by version with proper default handling
 - **DOM Traversal Logic**: Stops at next task to prevent incorrect pairing
 - **Automatic Pairing**: No manual props needed - content authors just place Answer after Task
-- **Emoji Status System**: Replaced checkboxes with clickable green ✓ / red ⭕️ emojis
-- **Starlight Component Override**: Successfully overrode PageSidebar while preserving TOC functionality
-- **Responsive Height Management**: Flexbox-based height distribution with individual section scrolling
+- **Emoji Status System**: Clickable green ✓ / gray ☐ indicators
+- **Starlight Component Override**: Successfully overrode both Sidebar and PageSidebar
+- **Hover-based Scrollbars**: Scrollbars hidden until hover to reduce visual clutter
 
-### Phase 4: Sidebar Reorganization (Session 2025-08-12)
-**Goal**: Move "On This Page" ToC to left sidebar, simplify right sidebar to objectives + tasks only
-
-**Tasks**:
-1. Override `Sidebar` component to add ToC below existing navigation
-   - Keep cross-page navigation at top (Guides, Reference, Examples)
-   - Add visual separator between navigation and ToC
-   - Maintain mobile responsive behavior
-2. Simplify `PageSidebar.astro` to remove ToC
-   - Show only Learning Objectives and Tasks
-   - Redistribute height 50/50 between objectives and tasks
-   - Fix positioning and scrolling issues from Phase 3
-3. Update component configuration in `astro.config.mjs`
-
-**Benefits**:
-- ✅ Logical separation: navigation/structure (left) vs progress tracking (right)
-- ✅ Solves right sidebar height distribution issues (50/50 vs cramped 1/6, 1/3, 1/2+)
-- ✅ Fixes positioning and scrolling conflicts
-- ✅ More breathing room for objectives and tasks
-
-**Current Session TODO:**
-1. Create new Sidebar.astro component override
-2. Add TableOfContents to left sidebar below navigation  
-3. Simplify PageSidebar.astro to only show objectives and tasks
-4. Test and refine the new layout
-
-### Future Enhancements (Phase 4+)
+### Future Enhancements (Phase 5+)
 - **Dynamic Summary Colors**: Make the LearningObjectivesSummary component change from orange (incomplete) to green (complete) based on completion status of all objectives on the page. This requires:
   - Real-time monitoring of checkbox states
   - Completion percentage calculation
   - Dynamic CSS class/style updates
   - State persistence across page loads
+- **Mobile responsiveness testing**: Verify sidebar behavior on mobile devices
+- **Accessibility audit**: Ensure keyboard navigation and screen reader support

@@ -233,7 +233,7 @@ class ProgressTracker {
     // Navigation click handlers
     document.addEventListener('click', (event) => {
       // Handle sidebar objective navigation
-      if (event.target.closest('.progress-sections .objective-item')) {
+      if (event.target.closest('#objectives-summary-list .objective-item')) {
         event.preventDefault();
         const objectiveItem = event.target.closest('.objective-item');
         const targetId = objectiveItem.dataset.targetId;

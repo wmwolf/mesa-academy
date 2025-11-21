@@ -34,6 +34,17 @@
     padding: 0;
     overflow-y: auto;
     flex: 1;
+    /* Only show scrollbar when content overflows */
+    scrollbar-gutter: stable;
+  }
+
+  /* Hide scrollbar when not needed */
+  #tasks-summary-list:not(:hover) {
+    overflow-y: hidden;
+  }
+
+  #tasks-summary-list:hover {
+    overflow-y: auto;
   }
   
   /* Global styles for dynamically generated content */

@@ -25,3 +25,10 @@
 Add additional Tailwind styles to this file:
 https://tailwindcss.com/docs/adding-custom-styles#using-custom-css
 */
+
+/* Center main content on wide screens */
+@media (min-width: 72rem) {
+	main .sl-container {
+		margin-inline: auto;
+	}
+}

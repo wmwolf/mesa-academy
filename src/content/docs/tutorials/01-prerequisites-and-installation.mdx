@@ -1,15 +1,14 @@
 ---
-title: Prerequisites and Setup
+title: Prerequisites and Installation
 description: Learning important background skills, downloading and installing MESA and its dependencies, and setting up your environment.
 tutorialNumber: "1"
 ---
 
-import Task from '../../../components/Task.astro';
-import { Aside } from '@astrojs/starlight/components';
-import LearningObjective from '../../../components/LearningObjective.astro';
+import Task from "../../../components/Task.astro";
+import { Aside } from "@astrojs/starlight/components";
+import LearningObjective from "../../../components/LearningObjective.astro";
 
 export const tutorialNumber = frontmatter.tutorialNumber;
-
 
 Learning important background skills, downloading and installing MESA and its dependencies, and setting up your environment.
 
@@ -18,9 +17,11 @@ Learning important background skills, downloading and installing MESA and its de
 Before you start to learn MESA, you really should have a good understanding of the topics below. Note that someone starting from scratch will likely need to dedicate a substantial amount of time to be comfortable with these topics.
 
 <Task title="Learn the Fundamentals" number={1} tutorialNumber={tutorialNumber}>
-  Read over each of the following sections and make sure you are comfortable with the topics covered. If you are not, use the recommended resources to learn the material. If you are already comfortable with these topics, you can skip this task.
+  Read over each of the following sections and make sure you are comfortable
+  with the topics covered. If you are not, use the recommended resources to
+  learn the material. If you are already comfortable with these topics, you can
+  skip this task.
 </Task>
-
 
 ### Command Line
 
@@ -38,40 +39,52 @@ In particular, you should be comfortable with the following commands and concept
 
 If you are not comfortable with these concepts, I recommend you work through the excellent tutorials from Software Carpentry on [the Unix shell](https://swcarpentry.github.io/shell-novice/). These tutorials are designed to be accessible to beginners in computational science and will give you a solid foundation in working with the command line.
 
-<LearningObjective statement="use basic command line utilities to navigate and manipulate directory structures" number={1} tutorialNumber={tutorialNumber} />
-
+<LearningObjective
+  statement="use basic command line utilities to navigate and manipulate directory structures"
+  number={1}
+  tutorialNumber={tutorialNumber}
+/>
 
 ### Text Editors
 
-Find a text editor that you are comfortable with. If you will be running MESA remotely, you might consider a terminal-based editor like `nano` (austere but simple) or `vim`/`emacs` (feature-rich but a steep learning curve). If you will be running MESA locally, you might prefer a graphical editor like [VS Code](https://code.visualstudio.com), or [Sublime Text](https://www.sublimetext.com). I'll be using [VS Code](https://code.visualstudio.com) in these tutorials (and its asscociated `code` command line tool for opening files and directories), but you can use any editor you like.
+Find a text editor that you are comfortable with. If you will be running MESA remotely, you might consider a terminal-based editor like `nano` (austere but simple) or `vim`/`emacs` (feature-rich but a steep learning curve). If you will be running MESA locally, you might prefer a graphical editor like [VS Code](https://code.visualstudio.com), or [Sublime Text](https://www.sublimetext.com). I'll be using [VS Code](https://code.visualstudio.com) in these tutorials (and its associated `code` command line tool for opening files and directories), but you can use any editor you like.
 
 We'll be working with Fortran files a lot, so whatever editor you choose, it's worth taking the time to set up automatic syntax highlighting for Fortran files (`.f`, `.f90`, `.inc`, and files beginning with `inlist`). Fortran is not a very popular language these days, so you may need to search for a plugin or extension for your editor to get syntax highlighting working. If you are using VS Code, I recommend the [Modern Fortran](https://marketplace.visualstudio.com/items?itemName=fortran-lang.linter-gfortran) extension and then setting the following file associations in your settings:
 
----------------
-| Item | Value|
-|------|------|
-|inlist|FortranFreeForm|
-|inlist*|FortranFreeForm|
-|*.dek|FortranFreeForm|
-|*.inc|FortranFreeForm|
-|*.defaults|FortranFreeForm|
-|*.list|FortranFreeForm|
----------------
+---
+
+| Item        | Value           |
+| ----------- | --------------- |
+| inlist      | FortranFreeForm |
+| inlist\*    | FortranFreeForm |
+| \*.dek      | FortranFreeForm |
+| \*.inc      | FortranFreeForm |
+| \*.defaults | FortranFreeForm |
+| \*.list     | FortranFreeForm |
+
+---
 
 Other text editors have similar abilities to set default file associations. I strongly recommend you take the time to set this up, as automatic syntax highlighting will make it easier to read and debug Fortran code and inlist files.
 
-<LearningObjective statement="use a text editor effectively for Fortran-based work" number={2} tutorialNumber={tutorialNumber} />
-
+<LearningObjective
+  statement="use a text editor effectively for Fortran-based work"
+  number={2}
+  tutorialNumber={tutorialNumber}
+/>
 
 ### Stellar Structure and Evolution
 
-While you don't need to be an expert in stellar structure an evolution, I think you'll find that some familiarity with the basic concepts and defintions will be essential to understanding MESA (and these guies). I recommend the following resources:
+While you don't need to be an expert in stellar structure and evolution, I think you'll find that some familiarity with the basic concepts and definitions will be essential to understanding MESA (and these guides). I recommend the following resources:
 
 - First couple of chapters of [Stellar Interiors](https://link.springer.com/book/10.1007/978-1-4419-9110-2) by Hansen, Kawaler, and Trimble. Chapter 2, in particular, gives a nice narrative overview of the basic concepts and definitions without getting bogged down in too much mathematical detail.
 - [Stellar Structure and Evolution](https://link.springer.com/book/10.1007/978-3-642-30304-3) by Kippenhahn, Weigert, and Weiss. This is a classic, but it's hard to recommend it as a "quick start" since it is so comprehensive. If you are looking for a more in-depth treatment, this is a great resource.
 - [Stellar Astrophysics](https://web.pa.msu.edu/people/ebrown/docs/stellar-notes.pdf) by Ed Brown. These very polished "notes" are for students in the Michigan State graduate astrophysics course, but since they are written by a former MESA developer, they even come with MESA exercises!
 
-<LearningObjective statement="understand the basic concepts of stellar structure and evolution" number={3} tutorialNumber={tutorialNumber} />
+<LearningObjective
+  statement="understand the basic concepts of stellar structure and evolution"
+  number={3}
+  tutorialNumber={tutorialNumber}
+/>
 
 ### Fortran, but not Really
 
@@ -81,16 +94,26 @@ MESA is written in modern Fortran, but you don't need to be an expert in Fortran
 
 With the prerequisite knowledge in hand, you are ready to download and install MESA.
 
-<Task title="Download and Install the MESA SDK and MESA" number={2} tutorialNumber={tutorialNumber}>
-  Follow the <a href="https://docs.mesastar.org/en/latest/installation.html" 
-  target="_blank" rel="noopener noreferrer">MESA
-  Documentation</a> to download and install the MESA SDK and MESA itself. Make sure to follow the instructions for your operating system, and install any dependencies that are required.
+<Task
+  title="Download and Install the MESA SDK and MESA"
+  number={2}
+  tutorialNumber={tutorialNumber}
+>
+  Follow the <a href="https://docs.mesastar.org/en/latest/installation.html" target="_blank" rel="noopener noreferrer">MESA Documentation</a> to download and install the MESA SDK and MESA itself. Make sure to follow the
+  instructions for your operating system, and install any dependencies that are
+  required.
 </Task>
 <Aside>
-    While I aim for most MESA-related content in these guies to be self-contained, the MESA documentation is a great resource for a lot of common tasks and questions. If you get stuck, I recommend checking the <a href="https://docs.mesastar.org/en/latest/" 
-  target="_blank" rel="noopener noreferrer">MESA
-  Documentation</a> first. In the case of installation, the documentation is very well written, so you should be able to follow it without too much trouble.
+  While I aim for most MESA-related content in these guides to be
+  self-contained, the MESA documentation is a great resource for a lot of common
+  tasks and questions. If you get stuck, I recommend checking the <a href="https://docs.mesastar.org/en/latest/" target="_blank" rel="noopener noreferrer">MESA Documentation</a> first. In the case of installation, the documentation is very well written, so
+  you should be able to follow it without too much trouble.
 </Aside>
-Once you've verified that MESA is installed correctly, you are ready to start using it!
+Once you've verified that MESA is installed correctly, you are ready to start
+using it!
 
-<LearningObjective statement="download and install MESA and its dependencies" number={4} tutorialNumber={tutorialNumber} />
+<LearningObjective
+  statement="download and install MESA and its dependencies"
+  number={4}
+  tutorialNumber={tutorialNumber}
+/>
